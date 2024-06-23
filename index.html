@@ -1,0 +1,4177 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đoàn Minh Khang - Giới thiệu HTML</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Chung */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .color-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            padding: 10px;
+            width: 200px;
+            margin: auto;
+        }
+
+        .color-name {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .color-hex {
+            margin-bottom: 10px;
+        }
+
+        .color-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .color-sample {
+            height: 50px;
+            width: 100%;
+        }
+
+        /* Đường link */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mã code */
+        pre {
+            background-color: #eee;
+            padding: 1rem;
+            overflow: auto;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f8f8f8;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        /* Danh sách */
+        ul,
+        ol {
+            padding-left: 2rem;
+        }
+
+        /* Bảng */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+        }
+
+        /* Responsive layout */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            pre {
+                font-size: 0.875rem;
+                /* 14px */
+            }
+
+            table {
+                font-size: 0.875rem;
+                /* 14px */
+            }
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            /* Canh chỉnh các phần tử trong header sang hai bên */
+            align-items: center;
+            background-color: #fff;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tiêu đề */
+        h1 {
+            position: absolute;
+            left: 20px;
+            margin: 0;
+        }
+
+        /* Tìm kiếm */
+        #search-container {
+            flex: 1;
+            /* Để phần tìm kiếm co dãn */
+            display: flex;
+            justify-content: right;
+            align-items: center;
+        }
+
+        #search-input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        #search-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #search-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Menu */
+        #menu-container {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            
+            /* Đưa menu sang góc bên phải */
+        }
+        #menu-button {
+            padding: 12px 16px;
+            font-size: 13px;
+        }
+        .menu-list {
+            display: none;
+            /* Mặc định ẩn danh sách */
+            position: absolute;
+            top: 100%;
+            /* Hiển thị từ dưới nút menu */
+            left: 0;
+            z-index: 1;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 10px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            max-height: 850px;
+            /* Đặt chiều cao tối đa */
+            overflow-y: auto;
+            /* Cho phép cuộn khi nội dung vượt quá chiều cao */
+            width: 600px;
+            /* Đặt chiều rộng */
+            font-size: 14px;
+            /* Kích thước chữ */
+        }
+
+        .menu-list.grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Chia thành 2 cột bằng nhau */
+            gap: 10px;
+            /* Khoảng cách giữa các phần tử */
+        }
+
+        .menu-list li {
+            list-style: none;
+            /* Loại bỏ dấu đầu dòng mặc định */
+        }
+
+        .menu-list a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 8px 12px;
+            /* Kích thước padding */
+            transition: background-color 0.3s;
+        }
+
+        .menu-list a:hover {
+            background-color: #f0f0f0;
+        }
+
+        main {
+            margin-top: 100px;
+            /* Để tránh bị header che mất nội dung */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Đoàn Minh Khang - Giới thiệu HTML</h1>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Nhập từ khoá cần tìm..." />
+            <button id="search-button">Tìm kiếm</button>
+        </div>
+        <div id="menu-container">
+            <button id="menu-button">Danh mục</button>
+            <ul id="menu-list" class="menu-list">
+            </ul>
+        </div>
+    </header>
+    <main>
+        <p>Chào mừng các bạn đến với bài học đầu tiên của Khóa học Front-End. Hôm nay, chúng ta sẽ tìm hiểu về thế giới
+            lập
+            trình Front-End và ngôn ngữ đánh dấu HTML - nền tảng để xây dựng giao diện website.</p>
+        <br>
+        <h2>1. Lập trình FRONT-END là gì?</h2>
+        <br>
+        <p>Tưởng tượng bạn đang ghé thăm một trang web, mọi thứ bạn nhìn thấy, từ hình ảnh, văn bản, bố cục cho đến cách
+            bạn
+            tương tác với trang web đều được tạo ra bởi lập trình Front-End.</p>
+        <p>Nói cách khác, lập trình Front-End là việc xây dựng giao diện website mà người dùng nhìn thấy và tương tác.
+            Để
+            làm được điều này, lập trình viên Front-End sử dụng các ngôn ngữ như HTML, CSS và JavaScript.</p>
+        <h3>Công việc của lập trình viên Front-End:</h3>
+        <ul>
+            <li>Biến bản thiết kế (UI) thành hiện thực: Nhận bản thiết kế từ UI Designer và sử dụng HTML, CSS,
+                JavaScript để
+                xây dựng giao diện website giống với thiết kế.</li>
+            <li>Tạo trải nghiệm người dùng (UX) tốt: Đảm bảo website hoạt động mượt mà, dễ sử dụng và mang đến trải
+                nghiệm
+                tốt nhất cho người dùng.</li>
+            <li>Làm việc nhóm: Hợp tác chặt chẽ với UI Designer, Back-end Developer và các thành viên khác trong dự án
+                để
+                hoàn thành sản phẩm.</li>
+        </ul>
+        <p><strong>Ví dụ:</strong></p>
+        <ul>
+            <li>Bạn truy cập Facebook và thấy giao diện đăng nhập, bảng tin, danh sách bạn bè... tất cả đều do lập trình
+                viên Front-End tạo ra.</li>
+            <li>Bạn xem video trên Youtube, giao diện phát video, nút điều khiển, bình luận... cũng là sản phẩm của lập
+                trình Front-End.</li>
+        </ul>
+        <br>
+        <h2>2. Mục tiêu khóa học:</h2>
+        <br>
+        <p>Khóa học này sẽ trang bị cho bạn những kiến thức và kỹ thực cần thiết để trở thành một lập trình viên
+            Front-End.
+            Cụ thể:</p>
+        <ul>
+            <li>Nắm vững kiến thức nền tảng về HTML, CSS, JavaScript.</li>
+            <li>Tự tay xây dựng giao diện website theo bản thiết kế.</li>
+            <li>Nâng cao khả năng tư duy logic và giải quyết vấn đề.</li>
+            <li>Có đủ khả năng ứng tuyển vào các công ty phần mềm với vị trí Front-End Developer.</li>
+        </ul>
+        <br>
+        <h2>3. UI/UX là gì? Vai trò của Front-End trong UI/UX</h2>
+        <br>
+        <p>Trong quá trình xây dựng website, bạn sẽ thường xuyên bắt gặp hai thuật ngữ UI và UX. Vậy chúng là gì?</p>
+        <h3>UI (User Interface - Giao diện người dùng):</h3>
+        <p>Là tất cả những yếu tố trực quan mà người dùng nhìn thấy và tương tác trên website, bao gồm:</p>
+        <ul>
+            <li>Màu sắc: Lựa chọn bảng màu phù hợp với thương hiệu và tạo cảm giác hài hòa cho website.</li>
+            <li>Hình ảnh: Sử dụng hình ảnh chất lượng cao, đẹp mắt và truyền tải thông điệp hiệu quả.</li>
+            <li>Bố cục: Sắp xếp các yếu tố trên website một cách hợp lý, logic và dễ nhìn.</li>
+            <li>Typography (Kiểu chữ): Lựa chọn font chữ phù hợp, đảm bảo dễ đọc và tạo điểm nhấn cho nội dung.</li>
+        </ul>
+        <h3>UX (User Experience - Trải nghiệm người dùng):</h3>
+        <p>Là cảm nhận tổng thể của người dùng khi sử dụng website. Trải nghiệm người dùng tốt khi website:</p>
+        <ul>
+            <li>Dễ sử dụng: Người dùng dễ dàng tìm kiếm thông tin, sử dụng các tính năng...</li>
+            <li>Hỗ trợ người dùng tốt: Có hướng dẫn rõ ràng, giải đáp thắc mắc nhanh chóng...</li>
+            <li>Tương thích trên nhiều thiết bị: Website hiển thị tốt trên máy tính, điện thoại, máy tính bảng...</li>
+        </ul>
+        <h3>Vai trò của Front-End trong UI/UX:</h3>
+        <p>Lập trình viên Front-End đóng vai trò quan trọng trong việc hiện thực hóa UI/UX, biến ý tưởng thiết kế thành
+            sản
+            phẩm thực tế. Họ là cầu nối giữa bản thiết kế và trải nghiệm người dùng.</p>
+        <p><strong>Ví dụ:</strong></p>
+        <ul>
+            <li><strong>UI:</strong> Designer thiết kế nút "Đăng ký" màu đỏ nổi bật trên nền trắng. Lập trình viên
+                Front-End
+                sẽ sử dụng HTML, CSS để tạo ra nút này trên website.</li>
+            <li><strong>UX:</strong> Designer muốn người dùng dễ dàng tìm thấy thông tin liên lạc. Lập trình viên
+                Front-End
+                sẽ đặt thông tin này ở vị trí dễ nhìn, sử dụng màu sắc nổi bật...</li>
+        </ul>
+        <br>
+        <h2>4. Cài đặt môi trường</h2>
+        <br>
+        <h3>Phần mềm cần thiết:</h3>
+        <p>Visual Studio Code (VS Code): Đây là phần mềm soạn thảo code phổ biến và mạnh mẽ, hỗ trợ nhiều ngôn ngữ lập
+            trình, bao gồm HTML, CSS, JavaScript. Bạn có thể tải VS Code miễn phí tại
+            <br> đây: <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a></p>
+        <h3>Extensions (Tiện ích mở rộng) cho VS Code:</h3>
+        <p>Extensions giúp bạn viết code nhanh hơn, hiệu quả hơn và có nhiều tính năng hữu ích. Dưới đây là một số
+            Extensions cần thiết cho lập trình Front-End:</p>
+        <ul>
+            <li>Auto Rename Tag: Tự động sửa tên thẻ HTML (khi bạn đổi tên thẻ mở, thẻ đóng cũng tự động đổi theo).</li>
+            <li>Beautify: Làm đẹp code, căn chỉnh code tự động giúp code dễ đọc hơn.</li>
+            <li>Color Highlight: Hiển thị màu sắc trực tiếp trên VS Code theo mã màu bạn viết trong CSS.</li>
+            <li>CSS Variables Autocomplete: Gợi ý các biến trong CSS giúp bạn viết code nhanh hơn.</li>
+            <li>HTML Boilerplate: Tạo khung HTML cơ bản một cách nhanh chóng, bạn không cần phải viết lại từ đầu.</li>
+            <li>HTML Snippets: Gợi ý code HTML khi bạn gõ, giúp bạn viết code nhanh hơn và tránh sai sót.</li>
+            <li>Live Server: Tự động tải lại website trên trình duyệt mỗi khi bạn lưu code, giúp bạn xem kết quả thay
+                đổi
+                trực tiếp mà không cần F5.</li>
+            <li>Material Icon Theme: Thay đổi icon cho các file và thư mục trên VS Code, giúp bạn dễ dàng phân biệt các
+                loại
+                file.</li>
+            <li>Path Intellisense: Gợi ý đường dẫn đến các file và thư mục trong dự án, giúp bạn viết code nhanh hơn và
+                tránh sai sót.</li>
+        </ul>
+        <br>
+        <h2>5. Giới thiệu HTML</h2>
+        <br>
+        <h3>HTML là gì?</h3>
+        <p>HTML là viết tắt của Hyper Text Markup Language (Ngôn ngữ đánh dấu siêu văn bản). Đây là ngôn ngữ nền tảng để
+            xây
+            dựng website.</p>
+        <p><strong>Lưu ý:</strong> HTML không phải là ngôn ngữ lập trình. Nó chỉ là ngôn ngữ đánh dấu, dùng để tạo bố
+            cục và
+            định dạng nội dung cho trang web.</p>
+        <h3>Ví dụ:</h3>
+        <p>Bạn muốn tạo một trang web đơn giản hiển thị tiêu đề "Chào mừng" và một đoạn văn bản. Bạn sẽ sử dụng HTML để
+            "đánh dấu" nội dung này. Trình duyệt web (như Chrome, Firefox...) sẽ đọc hiểu mã HTML và hiển thị nội dung
+            lên
+            website cho người dùng xem.</p>
+        <br>
+        <h2>6. Cấu trúc file HTML</h2>
+        <br>
+        <p>Mỗi trang web được xây dựng từ một hoặc nhiều file HTML. File HTML là file văn bản thuần túy, có phần mở rộng
+            là
+            ".html".</p>
+        <h3>Cấu trúc cơ bản của file HTML:</h3>
+        <pre>
+        &lt;!DOCTYPE html&gt;
+        &lt;html&gt;
+            &lt;head&gt;
+                &lt;title&gt;Tiêu đề trang web&lt;/title&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;h1&gt;Tiêu đề chính&lt;/h1&gt;
+                &lt;p&gt;Đoạn văn bản&lt;/p&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;
+    </pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>&lt;!DOCTYPE html&gt;: Khai báo loại tài liệu HTML5.</li>
+            <li>&lt;html&gt;: Thẻ mở đầu của trang HTML.</li>
+            <li>&lt;head&gt;: Phần đầu của trang HTML, chứa các thông tin về trang web như tiêu đề, meta data...</li>
+            <li>&lt;title&gt;: Tiêu đề của trang web, hiển thị trên thanh tiêu đề của trình duyệt.</li>
+            <li>&lt;body&gt;: Phần nội dung chính của trang web, chứa các thành phần như tiêu đề, đoạn văn, hình ảnh...
+            </li>
+            <li>&lt;h1&gt;: Thẻ tiêu đề chính (heading), nội dung nằm trong thẻ này sẽ được hiển thị đậm và lớn hơn so
+                với
+                văn bản thông thường.</li>
+            <li>&lt;p&gt;: Thẻ đoạn văn (paragraph), dùng để chứa các đoạn văn bản.</li>
+        </ul>
+        <br>
+        <h2>7. Giới thiệu Dev Tools</h2>
+        <br>
+        <p>Dev Tools (Công cụ dành cho nhà phát triển) là một bộ công cụ mạnh mẽ được tích hợp sẵn trên các trình duyệt
+            web
+            (như Chrome, Firefox...). Dev Tools giúp bạn kiểm tra, debug và tối ưu hóa website.</p>
+        <h3>Cách mở Dev Tools:</h3>
+        <ul>
+            <li>Click chuột phải: Click chuột phải vào bất kỳ đâu trên trang web và chọn "Kiểm tra phần tử"
+                (Inspect/Inspect
+                Element).</li>
+            <li>Phím tắt:
+                <ul>
+                    <li>Windows/Linux: Ctrl + Shift + I hoặc F12</li>
+                    <li>macOS: Command + Option + I</li>
+                </ul>
+            </li>
+            <li>Menu trình duyệt:
+                <ul>
+                    <li>Chrome: Click vào biểu tượng ba chấm dọc ở góc trên bên phải &gt; Công cụ khác &gt; Công cụ dành
+                        cho
+                        nhà phát triển.</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>Giao diện Dev Tools:</h3>
+        <p>Dev Tools có nhiều tab, mỗi tab có chức năng riêng. Dưới đây là một số tab quan trọng:</p>
+        <ul>
+            <li>Elements: Xem và chỉnh sửa trực tiếp HTML, CSS của trang web.</li>
+            <li>Console: Xem log, chạy Javascript, debug lỗi Javascript.</li>
+            <li>Sources: Debug Javascript chi tiết hơn, xem source code, breakpoint.</li>
+            <li>Network: Theo dõi request, response của website, phân tích hiệu năng website.</li>
+        </ul>
+        <h3>Một số thao tác cơ bản:</h3>
+        <h4>a. Tab Elements:</h4>
+        <ul>
+            <li>Xem và chỉnh sửa HTML: Chọn element trên trang web, code HTML tương ứng sẽ được highlight. Bạn có thể
+                sửa
+                trực tiếp HTML trên Dev Tools và xem kết quả thay đổi ngay lập tức.</li>
+            <li>Xem và chỉnh sửa CSS: Chọn element, CSS được áp dụng cho element đó sẽ hiển thị ở bên phải. Bạn có thể
+                thêm,
+                sửa, xóa thuộc tính CSS và xem kết quả trực tiếp.</li>
+            <li>Tìm kiếm element: Nhấn Ctrl + F hoặc Command + F để tìm kiếm element theo tên tag, class, ID...</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <p>Bạn muốn thay đổi màu chữ của tiêu đề &lt;h1&gt; thành màu đỏ. Bạn có thể làm như sau:</p>
+        <ol>
+            <li>Mở Dev Tools và chuyển đến tab Elements.</li>
+            <li>Click vào element &lt;h1&gt; trên trang web hoặc tìm kiếm element &lt;h1&gt; trên Dev Tools.</li>
+            <li>Ở khung bên phải, tìm đến thuộc tính color trong CSS.</li>
+            <li>Thay đổi giá trị của color thành red.</li>
+            <li>Bạn sẽ thấy tiêu đề &lt;h1&gt; trên trang web chuyển thành màu đỏ ngay lập tức.</li>
+        </ol>
+        <h4>b. Tab Console:</h4>
+        <ul>
+            <li>Xem log: Các thông báo từ website như console.log(), lỗi Javascript... sẽ hiển thị ở đây.</li>
+            <li>Chạy Javascript: Nhập code Javascript trực tiếp vào Console và nhấn Enter để thực thi.</li>
+            <li>Debug lỗi: Xem chi tiết lỗi Javascript, vị trí lỗi, stack trace.</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <p>Bạn muốn kiểm tra giá trị của một biến Javascript. Bạn có thể làm như sau:</p>
+        <ol>
+            <li>Mở Dev Tools và chuyển đến tab Console.</li>
+            <li>Nhập tên biến Javascript vào Console và nhấn Enter.</li>
+            <li>Giá trị của biến sẽ được in ra Console.</li>
+        </ol>
+        <br>
+        <h2>8. Thẻ &lt;meta&gt; trong HTML</h2>
+        <br>
+        <p>Thẻ &lt;meta&gt; cung cấp thông tin meta về trang HTML, không hiển thị trực tiếp trên trang web, nhưng rất
+            quan
+            trọng cho SEO và cách trình duyệt hiển thị website. Thẻ &lt;meta&gt; luôn nằm trong phần &lt;head&gt;.</p>
+        <h3>Một số thẻ &lt;meta&gt; thường dùng:</h3>
+        <ul>
+            <li>&lt;meta charset="UTF-8"&gt;: Xác định bộ ký tự được sử dụng cho trang web. UTF-8 là bộ ký tự phổ biến,
+                hỗ
+                trợ hiển thị hầu hết các ngôn ngữ, bao gồm tiếng Việt.</li>
+            <li>&lt;meta name="keywords" content="HTML, CSS, JavaScript"&gt;: Xác định từ khóa cho công cụ tìm kiếm,
+                giúp
+                website dễ dàng được tìm thấy khi người dùng tìm kiếm các từ khóa liên quan.</li>
+            <li>&lt;meta name="description" content="Khóa học lập trình Front-End..."&gt;: Xác định mô tả ngắn gọn về
+                trang
+                web, hiển thị trên kết quả tìm kiếm.</li>
+            <li>&lt;meta name="author" content="Tên tác giả"&gt;: Xác định tác giả của trang web.</li>
+            <li>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;: Thiết lập chế độ xem
+                responsive, giúp website hiển thị tốt trên nhiều thiết bị khác nhau, từ điện thoại, máy tính bảng đến
+                máy
+                tính để bàn.</li>
+        </ul>
+        <br>
+        <h2>9. Comments, Elements, Attributes trong HTML</h2>
+        <br>
+        <h3>a. Comments (Chú thích):</h3>
+        <p>Comments là những dòng ghi chú trong code HTML, không được hiển thị trên trang web. Comments giúp bạn ghi
+            chú,
+            giải thích code, giúp code dễ hiểu hơn, đặc biệt là khi làm việc nhóm.</p>
+        <p>Cú pháp:</p>
+        <p>&lt;!-- Đây là comment --&gt;</p>
+
+        <h3>Html</h3>
+        <p>Phím tắt:</p>
+        <ul>
+            <li>Windows: Ctrl + /</li>
+            <li>Mac: Cmd + /</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Trang web của tôi &lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- Đây là tiêu đề chính --&gt;
+    &lt;h1&gt;Chào mừng đến với trang web của tôi! &lt;/h1&gt;
+  
+    &lt;!-- Đây là đoạn văn bản giới thiệu --&gt;
+    &lt;p&gt;Đây là trang web đầu tiên của tôi. &lt;/p&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+    </pre>
+
+        <section>
+            <h3>Elements (Phần tử)</h3>
+            <p>
+                Element là khối cơ bản cấu thành nên HTML. Mỗi element có một chức năng riêng.
+            </p>
+            <p>
+                Cấu trúc:
+                <code>&lt;tên-thẻ&gt;Nội dung element &lt;/tên-thẻ&gt;</code>
+            </p>
+            <p>
+                Trong đó:
+                <br>
+                <code>&lt;tên-thẻ&gt;</code>: Thẻ mở (start tag).
+                <br>
+                <code>&lt;/tên-thẻ&gt;</code>: Thẻ đóng (end tag).
+                <br>
+                Nội dung element: Nội dung nằm giữa thẻ mở và thẻ đóng.
+            </p>
+            <p>
+                Ví dụ:
+                <br>
+                <code>&lt;p&gt;Đây là một đoạn văn bản. &lt;/p&gt;</code>
+                <br>
+                <code>&lt;h1&gt;Tiêu đề chính &lt;/h1&gt;</code>
+            </p>
+            <p>
+                Lưu ý:
+                Tên thẻ không phân biệt chữ hoa, chữ thường. Tuy nhiên, nên viết thường theo chuẩn HTML.
+                Một số element không có thẻ đóng, được gọi là empty element, ví dụ: <code>&lt;br&gt;</code>,
+                <code>&lt;img&gt;</code>, <code>&lt;hr&gt;</code>...
+            </p>
+        </section>
+
+        <section>
+            <h3>Attributes (Thuộc tính)</h3>
+            <p>
+                Attributes cung cấp thêm thông tin cho element, nằm trong thẻ mở. Mỗi attribute có:
+            </p>
+            <p>
+                Cú pháp:
+                <code>&lt;tên-thẻ tên-thuộc-tính="giá-trị"&gt;Nội dung element &lt;/tên-thẻ&gt;</code>
+            </p>
+            <p>
+                Ví dụ:
+                <br>
+                <code>&lt;a href="https://google.com"&gt;Truy cập Google &lt;/a&gt;</code>: Thẻ <code>&lt;a&gt;</code>
+                tạo
+                liên kết, thuộc tính <code>href</code> xác định địa chỉ liên kết.
+                <br>
+                <code>&lt;img src="images/hinh-anh.jpg" alt="Mô tả hình ảnh"&gt;</code>: Thẻ <code>&lt;img&gt;</code>
+                chèn
+                hình ảnh, thuộc tính <code>src</code> xác định đường dẫn hình ảnh, thuộc tính <code>alt</code> cung cấp
+                mô
+                tả thay thế cho hình ảnh khi hình ảnh không hiển thị được.
+            </p>
+        </section>
+
+        <section>
+            <br>
+            <h2>10. Headings, Paragraphs, Formatting trong HTML</h2>
+            <br>
+            <article>
+                <h3>Headings (Tiêu đề)</h3>
+                <p>
+                    Headings dùng để tạo các tiêu đề, phụ đề trong trang web. Có 6 cấp độ heading, từ
+                    <code>&lt;h1&gt;</code> (quan trọng nhất) đến <code>&lt;h6&gt;</code> (ít quan trọng nhất).
+                </p>
+                <p>
+                    Cú pháp:
+                    <code>&lt;h1&gt;Tiêu đề chính &lt;/h1&gt;</code>
+                    <br>
+                    <code>&lt;h2&gt;Tiêu đề phụ 1 &lt;/h2&gt;</code>
+                    <br>
+                    <code>&lt;h3&gt;Tiêu đề phụ 2 &lt;/h3&gt;</code>
+                    <br>
+                    ...
+                </p>
+                <p>
+                    Ví dụ:
+                    <br>
+                    <code>&lt;h1&gt;Bài viết về HTML &lt;/h1&gt;</code>
+                    <br>
+                    <code>&lt;h2&gt;1. Giới thiệu HTML &lt;/h2&gt;</code>
+                    <br>
+                    <code>&lt;h3&gt;1.1. HTML là gì? &lt;/h3&gt;</code>
+                </p>
+                <p>
+                    Lưu ý:
+                    Mỗi trang web chỉ nên có một thẻ <code>&lt;h1&gt;</code> duy nhất, đại diện cho tiêu đề chính của
+                    trang
+                    web.
+                    Sử dụng các thẻ heading theo thứ tự từ <code>&lt;h1&gt;</code> đến <code>&lt;h6&gt;</code> để đảm
+                    bảo
+                    cấu trúc trang web hợp lý và hỗ trợ SEO tốt hơn.
+                </p>
+            </article>
+
+            <article>
+                <h3>Paragraphs (Đoạn văn bản)</h3>
+                <p>
+                    Paragraphs dùng để tạo các đoạn văn bản trong trang web.
+                </p>
+                <p>
+                    Cú pháp:
+                    <code>&lt;p&gt;Đây là một đoạn văn bản. &lt;/p&gt;</code>
+                </p>
+                <p>
+                    Ví dụ:
+                    <br>
+                    <code>&lt;p&gt;HTML là ngôn ngữ đánh dấu siêu văn bản, được sử dụng để tạo ra các trang web.
+                        &lt;/p&gt;</code>
+                    <br>
+                    <code>&lt;p&gt;HTML rất dễ học và sử dụng. &lt;/p&gt;</code>
+                </p>
+            </article>
+
+            <article>
+                <h3>Formatting (Định dạng văn bản)</h3>
+                <p>
+                    HTML cung cấp các thẻ để định dạng văn bản, ví dụ: in đậm, in nghiêng, gạch chân...
+                </p>
+                <p>
+                    Một số thẻ định dạng văn bản thường dùng:
+                </p>
+                <ul>
+                    <li><code>&lt;b&gt;</code> hoặc <code>&lt;strong&gt;</code>: In đậm.</li>
+                    <li><code>&lt;i&gt;</code> hoặc <code>&lt;em&gt;</code>: In nghiêng.</li>
+                    <li><code>&lt;small&gt;</code>: Chữ nhỏ hơn.</li>
+                    <li><code>&lt;del&gt;</code>: Gạch ngang (thể hiện phần văn bản đã bị xóa).</li>
+                    <li><code>&lt;ins&gt;</code>: Gạch chân (thể hiện phần văn bản được thêm vào).</li>
+                    <li><code>&lt;mark&gt;</code>: Đánh dấu văn bản (thường dùng để highlight văn bản).</li>
+                    <li><code>&lt;sub&gt;</code>: Chỉ số dưới (ví dụ: H<sub>2</sub>O).</li>
+                    <li><code>&lt;sup&gt;</code>: Chỉ số trên (ví dụ: x<sup>2</sup>).</li>
+                </ul>
+            </article>
+        </section>
+
+        <p>Ví dụ</p>
+        <p><code>&lt;b&gt;</code> hoặc <code>&lt;strong&gt;</code>: Đây là văn bản <b>in đậm</b>.</p>
+        <p><code>&lt;i&gt;</code> hoặc <code>&lt;em&gt;</code>: Đây là văn bản <i>in nghiêng</i>.</p>
+        <p><code>&lt;small&gt;</code>: Đây là văn bản <small>chữ nhỏ hơn</small>.</p>
+        <p><code>&lt;del&gt;</code>: Đây là văn bản <del>đã bị xóa</del>.</p>
+        <p><code>&lt;ins&gt;</code>: Đây là văn bản <ins>được thêm vào</ins>.</p>
+        <p><code>&lt;mark&gt;</code>: Đây là văn bản <mark>được đánh dấu</mark>.</p>
+        <p><code>&lt;sub&gt;</code>: Công thức hóa học của nước là H<sub>2</sub>O.</p>
+        <p><code>&lt;sup&gt;</code>: Diện tích hình vuông bằng cạnh bình phương: a<sup>2</sup>.</p>
+        <br>
+        <h2>11. Thẻ &lt;a&gt;, &lt;img&gt;, File Paths trong HTML</h2>
+        <br>
+        <h3>a. Thẻ &lt;a&gt; (Chèn liên kết):</h3>
+        <p>Thẻ &lt;a&gt; (anchor) tạo liên kết đến trang web khác hoặc đến vị trí khác trong cùng trang web.</p>
+        <p>Cú pháp: <code>&lt;a href="địa_chỉ_liên_kết"&gt;Nội dung liên kết&lt;/a&gt;</code></p>
+
+        <h3>Html Trong đó:</h3>
+        <p>href: Thuộc tính bắt buộc, xác định địa chỉ liên kết.</p>
+        <p>Nội dung liên kết: Văn bản hoặc hình ảnh hiển thị cho liên kết.</p>
+        <p>Ví dụ: <code>&lt;a href="https://google.com"&gt;Truy cập Google&lt;/a&gt;</code></p>
+
+        <h3>Html Một số thuộc tính khác của thẻ &lt;a&gt;:</h3>
+        <p>target: Xác định cách mở liên kết:</p>
+        <ul>
+            <li><code>_self</code> (mặc định): Mở liên kết ở tab hiện tại.</li>
+            <li><code>_blank</code>: Mở liên kết ở tab mới.</li>
+        </ul>
+        <p>title: Cung cấp thông tin bổ sung cho liên kết, hiển thị khi di chuột qua liên kết.</p>
+        <p>Ví dụ: <code>&lt;a href="https://google.com" target="_blank" title="Truy cập Google"&gt;Truy cập
+                Google&lt;/a&gt;</code></p>
+
+        <h3>b. Thẻ &lt;img&gt; (Chèn hình ảnh):</h3>
+        <p>Thẻ &lt;img&gt; dùng để chèn hình ảnh vào trang web. Đây là empty element, không có thẻ đóng.</p>
+        <p>Cú pháp: <code>&lt;img src="đường_dẫn_hình_ảnh" alt="mô_tả_hình_ảnh"&gt;</code></p>
+
+        <h3>Html Trong đó:</h3>
+        <p>src: Thuộc tính bắt buộc, xác định đường dẫn hình ảnh.</p>
+        <p>alt: Thuộc tính bắt buộc, cung cấp mô tả thay thế cho hình ảnh khi hình ảnh không hiển thị được.</p>
+        <p>Ví dụ: <code>&lt;img src="images/logo.png" alt="Logo công ty"&gt;</code></p>
+
+        <h3>c. File Paths (Đường dẫn):</h3>
+        <p>Đường dẫn là cách bạn xác định vị trí của file (như hình ảnh, file HTML...) trên máy tính hoặc trên server.
+        </p>
+        <p>Có hai loại đường dẫn:</p>
+        <ul>
+            <li>Absolute File Paths (Đường dẫn tuyệt đối): Đường dẫn đầy đủ, bắt đầu từ thư mục gốc.</li>
+            <li>Relative File Paths (Đường dẫn tương đối): Đường dẫn dựa trên vị trí của file HTML hiện tại.</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <p>Giả sử bạn có cấu trúc thư mục như sau:</p>
+        <pre>
+    website/
+    ├── index.html
+    └── images/
+        └── logo.png
+    </pre>
+        <p>Trong file index.html, bạn muốn chèn hình ảnh logo.png. Bạn có thể sử dụng đường dẫn tương đối:</p>
+        <p><code>&lt;img src="images/logo.png" alt="Logo"&gt;</code></p>
+
+        <h3>Kết hợp thẻ &lt;a&gt; và &lt;img&gt;:</h3>
+        <p>Bạn có thể chèn hình ảnh vào bên trong thẻ &lt;a&gt; để biến hình ảnh thành liên kết.</p>
+        <p>Ví dụ:</p>
+        <code>&lt;a href="https://google.com"&gt;
+            &lt;img src="images/logo.png" alt="Logo Google"&gt;
+            &lt;/a&gt;</code>
+        <br>
+        <br>
+        <h2>12. Thẻ &lt;video&gt;, &lt;audio&gt; trong HTML</h2>
+        <br>
+        <h3>a. Thẻ &lt;video&gt; (Chèn video):</h3>
+        <p>Thẻ &lt;video&gt; dùng để nhúng video vào trang web.</p>
+        <p>Cú pháp:</p>
+        <pre>
+    &lt;video width="chiều_rộng" height="chiều_cao" controls&gt;
+      &lt;source src="đường_dẫn_video.mp4" type="video/mp4"&gt;
+      &lt;!-- Hỗ trợ các định dạng video khác --&gt;
+    &lt;/video&gt;
+    </pre>
+        <h3>Video Tag (Chèn video):</h3>
+        <p>Trong đó:</p>
+        <ul>
+            <li><code>width</code>, <code>height</code>: Xác định chiều rộng, chiều cao của video.</li>
+            <li><code>controls</code>: Hiển thị thanh điều khiển video (phát/dừng, âm lượng...).</li>
+            <li><code>&lt;source&gt;</code>: Xác định nguồn video.</li>
+            <li><code>src</code>: Đường dẫn video.</li>
+            <li><code>type</code>: Kiểu video (ví dụ: video/mp4, video/webm, video/ogg).</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;video width="640" height="360" controls&gt;
+      &lt;source src="videos/my-video.mp4" type="video/mp4"&gt;
+      &lt;source src="videos/my-video.webm" type="video/webm"&gt;
+      Your browser does not support the video tag.
+    &lt;/video&gt;
+    </pre>
+        <video width="640" height="360" controls muted autoplay loop>
+            <source
+                src="https://previews.customer.envatousercontent.com/h264-video-previews/a7cffdd7-f08d-4ef6-b068-40eb7da257c5/51292379.mp4"
+                type="video/mp4">
+            <source src="videos/my-video.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <h3>Audio Tag (Chèn audio):</h3>
+        <p>Trong đó:</p>
+        <ul>
+            <li><code>controls</code>: Hiển thị thanh điều khiển audio (phát/dừng, âm lượng...).</li>
+            <li><code>&lt;source&gt;</code>: Xác định nguồn audio.</li>
+            <li><code>src</code>: Đường dẫn audio.</li>
+            <li><code>type</code>: Kiểu audio (ví dụ: audio/mpeg, audio/ogg, audio/wav).</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;audio controls&gt;
+      &lt;source src="audios/my-audio.mp3" type="audio/mpeg"&gt;
+      &lt;source src="audios/my-audio.ogg" type="audio/ogg"&gt;
+      Your browser does not support the audio element.
+    &lt;/audio&gt;
+    </pre>
+        <audio controls>
+            <source src="https://pixabay.com/vi/sound-effects/labyrinth-for-the-brain-190096/" type="audio/mpeg">
+            <source src="audios/my-audio.ogg" type="audio/ogg">
+            Your browser does not support the audio element.
+        </audio>
+        <h3>Thuộc tính khác của thẻ &lt;audio&gt; và &lt;video&gt;:</h3>
+        <ul>
+            <li><code>autoplay</code>: Tự động phát khi tải trang.</li>
+            <li><code>loop</code>: Phát lại khi kết thúc.</li>
+            <li><code>muted</code>: Tắt âm thanh.</li>
+        </ul>
+        <br>
+        <h2>13. Thẻ &lt;table&gt; trong HTML:</h2>
+        <br>
+        <p>Thẻ <code>&lt;table&gt;</code> dùng để tạo bảng trong HTML.</p>
+        <p>Cấu trúc:</p>
+        <pre>
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Tiêu đề cột 1&lt;/th&gt;
+          &lt;th&gt;Tiêu đề cột 2&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Ô 1&lt;/td&gt;
+          &lt;td&gt;Ô 2&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Ô 3&lt;/td&gt;
+          &lt;td&gt;Ô 4&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    </pre>
+
+        <p>Trong đó:</p>
+        <ul>
+            <li><code>&lt;table&gt;</code>: Xác định bảng.</li>
+            <li><code>&lt;thead&gt;</code>: Xác định phần đầu bảng (chứa tiêu đề cột).</li>
+            <li><code>&lt;tbody&gt;</code>: Xác định phần thân bảng (chứa dữ liệu).</li>
+            <li><code>&lt;tr&gt;</code>: Xác định một hàng.</li>
+            <li><code>&lt;th&gt;</code>: Xác định ô tiêu đề cột.</li>
+            <li><code>&lt;td&gt;</code>: Xác định ô dữ liệu.</li>
+        </ul>
+        <h3>Ví dụ:</h3>
+        <pre>
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;STT &lt;/th&gt;
+          &lt;th&gt;Họ tên &lt;/th&gt;
+          &lt;th&gt;Tuổi &lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;1 &lt;/td&gt;
+          &lt;td&gt;Nguyễn Văn A &lt;/td&gt;
+          &lt;td&gt;20 &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;2 &lt;/td&gt;
+          &lt;td&gt;Trần Thị B &lt;/td&gt;
+          &lt;td&gt;22 &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    </pre>
+        <table>
+            <thead>
+                <tr>
+                    <th>STT </th>
+                    <th>Họ tên </th>
+                    <th>Tuổi </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 </td>
+                    <td>Nguyễn Văn A </td>
+                    <td>20 </td>
+                </tr>
+                <tr>
+                    <td>2 </td>
+                    <td>Trần Thị B </td>
+                    <td>22 </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Thuộc tính colspan và rowspan:</h3>
+        <p> colspan: Gộp nhiều cột thành một cột. </p>
+        <p> rowspan: Gộp nhiều hàng thành một hàng. </p>
+        <pre>
+    &lt;table&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Họ tên &lt;/th&gt;
+        &lt;th colspan="2"&gt;Thông tin liên lạc &lt;/th&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Nguyễn Văn A &lt;/td&gt;
+        &lt;td&gt;0987654321 &lt;/td&gt;
+        &lt;td&gt;example@email.com &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    </pre>
+        <table>
+            <tr>
+                <th>Họ tên </th>
+                <th colspan="2">Thông tin liên lạc </th>
+            </tr>
+            <tr>
+                <td>Nguyễn Văn A </td>
+                <td>0987654321 </td>
+                <td>example@email.com </td>
+            </tr>
+        </table>
+        <br>
+        <h2>14. Thẻ &lt;ul&gt;, &lt;ol&gt; trong HTML</h2>
+        <br>
+        <h3>a. Thẻ &lt;ul&gt; (Unordered List - Danh sách không thứ tự):</h3>
+        <pre>
+    &lt;ul&gt;
+      &lt;li&gt;Mục 1 &lt;/li&gt;
+      &lt;li&gt;Mục 2 &lt;/li&gt;
+      &lt;li&gt;Mục 3 &lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+    </pre>
+
+        <p>Trong đó:</p>
+        <ul>
+            <li>&lt;ul&gt;: Xác định danh sách không thứ tự.</li>
+            <li>&lt;li&gt;: Xác định một mục trong danh sách.</li>
+        </ul>
+
+        <h3>Ví dụ:</h3>
+        <pre>
+    &lt;ul&gt;
+      &lt;li&gt;HTML &lt;/li&gt;
+      &lt;li&gt;CSS &lt;/li&gt;
+      &lt;li&gt;JavaScript &lt;/li&gt;
+    &lt;/ul&gt;
+    </pre>
+        <ul>
+            <li>HTML </li>
+            <li>CSS </li>
+            <li>JavaScript </li>
+        </ul>
+        <h3>b. Thẻ &lt;ol&gt; (Ordered List - Danh sách có thứ tự):</h3>
+        <pre>
+    &lt;ol&gt;
+      &lt;li&gt;Mục 1 &lt;/li&gt;
+      &lt;li&gt;Mục 2 &lt;/li&gt;
+      &lt;li&gt;Mục 3 &lt;/li&gt;
+    &lt;/ol&gt;
+    </pre>
+        <ol>
+            <li>Mục 1 </li>
+            <li>Mục 2 </li>
+            <li>Mục 3 </li>
+        </ol>
+        <p>Trong đó:</p>
+        <ul>
+            <li>&lt;ol&gt;: Xác định danh sách có thứ tự.</li>
+            <li>&lt;li&gt;: Xác định một mục trong danh sách.</li>
+        </ul>
+
+        <h3>Thuộc tính type của thẻ &lt;ol&gt;:</h3>
+        <pre>
+    1 (mặc định): Danh sách được đánh số thứ tự bằng số (1, 2, 3...).
+    A: Danh sách được đánh số thứ tự bằng chữ cái in hoa (A, B, C...).
+    a: Danh sách được đánh số thứ tự bằng chữ cái thường (a, b, c...).
+    I: Danh sách được đánh số thứ tự bằng số La Mã in hoa (I, II, III...).
+    i: Danh sách được đánh số thứ tự bằng số La Mã thường (i, ii, iii...).
+    </pre>
+
+        <h3>Ví dụ:</h3>
+        <pre>
+    &lt;ol type="A"&gt;
+      &lt;li&gt;HTML &lt;/li&gt;
+      &lt;li&gt;CSS &lt;/li&gt;
+      &lt;li&gt;JavaScript &lt;/li&gt;
+    &lt;/ol&gt;
+    </pre>
+        <ol type="A">
+            <li>HTML </li>
+            <li>CSS </li>
+            <li>JavaScript </li>
+        </ol>
+        <br>
+        <h2>15. Block Elements và Inline Elements trong HTML</h2>
+        <br>
+        <p>Mỗi element HTML đều có một kiểu hiển thị mặc định. Có hai kiểu hiển thị chính:</p>
+        <h3>a. Block Elements (Element khối):</h3>
+        <ul>
+            <li>Luôn bắt đầu trên một dòng mới.</li>
+            <li>Chiếm toàn bộ chiều rộng có sẵn (trải dài hết chiều ngang của element cha).</li>
+            <li>Có thể thiết lập chiều rộng, chiều cao, margin, padding.</li>
+        </ul>
+        <p>Một số Block Elements thường gặp:</p>
+        <pre>
+    &lt;h1&gt;, &lt;h2&gt;, ..., &lt;h6&gt;
+    &lt;p&gt;
+    &lt;div&gt;
+    &lt;ul&gt;, &lt;ol&gt;
+    &lt;table&gt;
+    &lt;form&gt;
+    </pre>
+
+        <h3>b. Inline Elements (Element nội tuyến):</h3>
+        <ul>
+            <li>Không bắt đầu trên một dòng mới.</li>
+            <li>Chiếm chiều rộng vừa đủ để chứa nội dung.</li>
+            <li>Không thể thiết lập chiều rộng, chiều cao.</li>
+            <li>Chỉ có thể thiết lập margin trái, margin phải, padding trái, padding phải.</li>
+        </ul>
+        <p>Một số Inline Elements thường gặp:</p>
+        <pre>
+    &lt;a&gt;
+    &lt;span&gt;
+    &lt;b&gt;, &lt;strong&gt;
+    &lt;i&gt;, &lt;em&gt;
+    &lt;img&gt;
+    </pre>
+
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;!-- Block element --&gt;
+    &lt;div&gt;
+    &lt;h1&gt;Tiêu đề &lt;/h1&gt;
+    &lt;p&gt;Đoạn văn bản. &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;!-- Inline element --&gt;
+    &lt;p&gt;Đây là một đoạn văn bản có chứa &lt;span class="highlight"&gt;văn bản được đánh dấu&lt;/span&gt;. &lt;/p&gt;</pre>
+        <br>
+        <h2>16. Class và ID trong HTML</h2>
+        <br>
+        <h3>a. Class:</h3>
+        <p>Class và ID là hai thuộc tính quan trọng trong HTML, dùng để xác định các element cụ thể, từ đó có thể áp
+            dụng
+            CSS hoặc Javascript cho các element đó.</p>
+        <ul>
+            <li>Dùng để đánh dấu một hoặc nhiều element có cùng một đặc điểm chung.</li>
+            <li>Một element có thể có nhiều class, cách nhau bởi dấu cách.</li>
+            <li>Cú pháp: <code>&lt;element class="tên-class"&gt;</code></li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;p class="highlight"&gt;Văn bản được đánh dấu &lt;/p&gt;
+    &lt;p class="highlight important"&gt;Văn bản quan trọng &lt;/p&gt;</pre>
+
+        <h3>b. ID:</h3>
+        <p>Dùng để đánh dấu duy nhất một element trên trang web.</p>
+        <ul>
+            <li>Một element chỉ có thể có một ID duy nhất.</li>
+            <li>Cú pháp: <code>&lt;element id="tên-id"&gt;</code></li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;h1 id="main-heading"&gt;Tiêu đề chính &lt;/h1&gt;
+    </pre>
+        <br>
+        <h2>17. Iframe trong HTML</h2>
+        <br>
+        <p>Thẻ &lt;iframe&gt; (inline frame) dùng để nhúng một trang web khác vào trang web hiện tại.</p>
+        <p>Cú pháp:</p>
+        <pre>
+    &lt;iframe src="đường_dẫn_trang_web" title="mô_tả"&gt; &lt;/iframe&gt;
+    </pre>
+        <p>Một số thuộc tính khác của thẻ &lt;iframe&gt;:</p>
+        <ul>
+            <li>width và height: Thiết lập chiều rộng, chiều cao iframe.</li>
+            <li>border: Thiết lập đường viền iframe.</li>
+            <li>allowfullscreen: Cho phép hiển thị iframe ở chế độ toàn màn hình.</li>
+        </ul>
+        <p>Ví dụ:</p>
+        <pre>
+    &lt;iframe src="https://www.google.com" title="Google Search"&gt; &lt;/iframe&gt;
+    </pre>
+
+        <p>Lưu ý:</p>
+        <ul>
+            <li>Không phải trang web nào cũng cho phép nhúng iframe.</li>
+            <li>Nên sử dụng iframe một cách hợp lý, tránh lạm dụng có thể ảnh hưởng đến hiệu năng trang web.</li>
+        </ul>
+        <br>
+        <h2>18. Semantic Elements trong HTML (tiếp theo)</h2>
+        <br>
+        <P>Ví dụ:</P>
+        &lt;!DOCTYPE html&gt;
+        &lt;html&gt;
+        &lt;head&gt;
+        &lt;title&gt;Trang web của tôi &lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+        &lt;header&gt;
+        &lt;h1&gt;Tiêu đề trang web &lt;/h1&gt;
+        &lt;nav&gt;
+        &lt;ul&gt;
+        &lt;li&gt; &lt;a href="#"&gt;Trang chủ &lt;/a&gt; &lt;/li&gt;
+        &lt;li&gt; &lt;a href="#"&gt;Giới thiệu &lt;/a&gt; &lt;/li&gt;
+        &lt;li&gt; &lt;a href="#"&gt;Liên hệ &lt;/a&gt; &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main&gt;
+        &lt;article&gt;
+        &lt;h2&gt;Bài viết 1 &lt;/h2&gt;
+        &lt;p&gt;Nội dung bài viết 1... &lt;/p&gt;
+        &lt;/article&gt;
+
+        &lt;article&gt;
+        &lt;h2&gt;Bài viết 2 &lt;/h2&gt;
+        &lt;p&gt;Nội dung bài viết 2... &lt;/p&gt;
+        &lt;/article&gt;
+        &lt;/main&gt;
+
+        &lt;aside&gt;
+        &lt;h3&gt;Thông tin bên lề &lt;/h3&gt;
+        &lt;p&gt;Nội dung bên lề... &lt;/p&gt;
+        &lt;/aside&gt;
+
+        &lt;footer&gt;
+        &lt;p&gt;Bản quyền thuộc về ... &lt;/p&gt;
+        &lt;/footer&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+
+        <p>Lợi ích của việc sử dụng Semantic Elements:
+            <br>
+            Cải thiện SEO: Các công cụ tìm kiếm có thể hiểu rõ hơn cấu trúc và nội dung trang web, từ đó cải thiện thứ
+            hạng
+            tìm kiếm.
+            <br>
+            Cải thiện khả năng đọc hiểu code: Code dễ đọc, dễ hiểu và dễ bảo trì hơn.
+            <br>
+            Hỗ trợ người dùng sử dụng công nghệ hỗ trợ: Người dùng sử dụng công nghệ hỗ trợ (như trình đọc màn hình) có
+            thể
+            dễ dàng truy cập và hiểu nội dung trang web hơn.
+        </p>
+        <section>
+            <br>
+            <h2>19. Forms trong HTML</h2>
+            <br>
+            <p>Forms (biểu mẫu) dùng để thu thập thông tin từ người dùng, ví dụ: form đăng nhập, form đăng ký, form liên
+                hệ...</p>
+
+            <h3>Cấu trúc:</h3>
+            <pre>
+    &lt;form action="đường_dẫn_xử_lý" method="phương_thức"&gt;
+        &lt;button type="submit"&gt;Gửi&lt;/button&gt;
+    &lt;/form&gt;
+    </pre>
+
+            <h3>Trong đó:</h3>
+            <ul>
+                <li><code>&lt;form&gt;</code>: Xác định form.</li>
+                <li><code>action</code>: Đường dẫn đến file xử lý dữ liệu form (thường là file PHP, Python...).</li>
+                <li><code>method</code>: Phương thức gửi dữ liệu form (GET hoặc POST).</li>
+                <li><code>&lt;button type="submit"&gt;</code>: Tạo nút "Gửi" để gửi dữ liệu form.</li>
+            </ul>
+
+            <h3>Các element thường dùng trong form:</h3>
+            <ul>
+                <li><code>&lt;input&gt;</code>: Tạo nhiều loại trường nhập liệu khác nhau, tùy thuộc vào thuộc tính
+                    <code>type</code>.</li>
+                <li><code>&lt;textarea&gt;</code>: Tạo trường nhập liệu nhiều dòng.</li>
+                <li><code>&lt;select&gt;</code>: Tạo danh sách lựa chọn.</li>
+                <li><code>&lt;label&gt;</code>: Tạo nhãn (label) cho trường nhập liệu, giúp người dùng dễ hiểu hơn.</li>
+            </ul>
+
+            <h3>Ví dụ:</h3>
+            <pre>
+    &lt;form action="process.php" method="post"&gt;
+    &lt;label for="name"&gt;Họ tên: &lt;/label&gt; &lt;br&gt;
+    &lt;input type="text" id="name" name="name"&gt; &lt;br&gt;
+    &lt;label for="email"&gt;Email: &lt;/label&gt; &lt;br&gt;
+    &lt;input type="email" id="email" name="email"&gt; &lt;br&gt; &lt;br&gt;
+    &lt;input type="submit" value="Gửi"&gt;
+    &lt;/form&gt;
+    </pre>
+        </section>
+        <br>
+        <h2>20. Điểm khác biệt giữa HTML và HTML5</h2>
+        <br>
+        <p>HTML5 là phiên bản mới nhất của HTML, được phát hành vào năm 2014. HTML5 mang đến nhiều tính năng mới, cải
+            thiện
+            hiệu năng và khả năng truy cập website.</p>
+        <p>Một số điểm khác biệt đáng chú ý:</p>
+        <table border="1">
+            <tr>
+                <th>Tính năng</th>
+                <th>HTML</th>
+                <th>HTML5</th>
+            </tr>
+            <tr>
+                <td>Doctype</td>
+                <td>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</td>
+                <td>&lt;!DOCTYPE html&gt;</td>
+            </tr>
+            <tr>
+                <td>Thẻ &lt;video&gt; và &lt;audio&gt;</td>
+                <td>Không hỗ trợ</td>
+                <td>Hỗ trợ</td>
+            </tr>
+            <tr>
+                <td>Semantic Elements</td>
+                <td>Ít</td>
+                <td>Nhiều hơn, ví dụ: &lt;header&gt;, &lt;footer&gt;, &lt;nav&gt;, &lt;article&gt;, &lt;aside&gt;...
+                </td>
+            </tr>
+            <tr>
+                <td>Kiểu input mới</td>
+                <td>Ít</td>
+                <td>Nhiều hơn, ví dụ: date, time, email, url, number, range...</td>
+            </tr>
+            <tr>
+                <td>Thẻ &lt;canvas&gt;</td>
+                <td>Không hỗ trợ</td>
+                <td>Hỗ trợ, dùng để vẽ đồ họa 2D</td>
+            </tr>
+            <tr>
+                <td>API mới</td>
+                <td>Ít</td>
+                <td>Nhiều hơn, ví dụ: Geolocation API, Web Storage API, Web Workers API...</td>
+            </tr>
+            <tr>
+                <td>Hỗ trợ CSS3</td>
+                <td>Không đầy đủ</td>
+                <td>Hỗ trợ đầy đủ</td>
+            </tr>
+            <tr>
+                <td>Khả năng truy cập</td>
+                <td>Thấp hơn</td>
+                <td>Cao hơn</td>
+            </tr>
+            <tr>
+                <td>Hiệu năng</td>
+                <td>Thấp hơn</td>
+                <td>Cao hơn</td>
+            </tr>
+        </table>
+        <br>
+        <h2>21. Bài tập thực hành</h2>
+        <br>
+        <p>Tạo một trang web cá nhân đơn giản, bao gồm các thông tin sau:</p>
+        <ul>
+            <li>Tiêu đề trang web (sử dụng thẻ &lt;h1&gt;).</li>
+            <li>Một đoạn giới thiệu ngắn gọn về bản thân (sử dụng thẻ &lt;p&gt;).</li>
+            <li>Danh sách các kỹ năng (sử dụng thẻ &lt;ul&gt; hoặc &lt;ol&gt;).</li>
+            <li>Một hình ảnh đại diện (sử dụng thẻ &lt;img&gt;).</li>
+            <li>Liên kết đến các trang mạng xã hội (sử dụng thẻ &lt;a&gt;).</li>
+        </ul>
+        <p>Sử dụng Dev Tools để kiểm tra và chỉnh sửa trang web.</p>
+        <p>Áp dụng các kiến thức đã học về HTML để định dạng và bố cục cho trang web.</p>
+        <p>Khang ITx Chúc anh em học tốt!</p>
+        <br>
+        <h2>22. Tài liệu tham khảo thêm (từ <a href="https://www.w3schools.com/">https://www.w3schools.com</a>)</h2>
+        <br>
+        <h2>22.1 HTML Element (phần tử) Cơ bản</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;!DOCTYPE&gt;</td>
+                <td>Định nghĩa loại tài liệu</td>
+            </tr>
+            <tr>
+                <td>&lt;html&gt;</td>
+                <td>Định nghĩa một tài liệu HTML</td>
+            </tr>
+            <tr>
+                <td>&lt;head&gt;</td>
+                <td>Chứa siêu dữ liệu/thông tin cho tài liệu</td>
+            </tr>
+            <tr>
+                <td>&lt;title&gt;</td>
+                <td>Định nghĩa một tiêu đề cho tài liệu</td>
+            </tr>
+            <tr>
+                <td>&lt;body&gt;</td>
+                <td>Định nghĩa phần thân của tài liệu</td>
+            </tr>
+            <tr>
+                <td>&lt;h1&gt; đến &lt;h6&gt;</td>
+                <td>Định nghĩa các tiêu đề HTML</td>
+            </tr>
+            <tr>
+                <td>&lt;p&gt;</td>
+                <td>Định nghĩa một đoạn văn bản</td>
+            </tr>
+            <tr>
+                <td>&lt;br&gt;</td>
+                <td>Chèn một dòng ngắt</td>
+            </tr>
+            <tr>
+                <td>&lt;hr&gt;</td>
+                <td>Định nghĩa sự thay đổi theo chủ đề trong nội dung</td>
+            </tr>
+            <tr>
+                <td>&lt;!--...--&gt;</td>
+                <td>Định nghĩa một ghi chú</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.2 Định dạng văn bản trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;acronym&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng &lt;abbr&gt; thay thế. Định nghĩa một từ viết tắt.</td>
+            </tr>
+            <tr>
+                <td>&lt;abbr&gt;</td>
+                <td>Định nghĩa một từ viết tắt hoặc chữ viết tắt.</td>
+            </tr>
+            <tr>
+                <td>&lt;address&gt;</td>
+                <td>Định nghĩa thông tin liên lạc cho tác giả/chủ sở hữu của tài liệu/bài viết.</td>
+            </tr>
+            <tr>
+                <td>&lt;b&gt;</td>
+                <td>Định nghĩa văn bản in đậm.</td>
+            </tr>
+            <tr>
+                <td>&lt;bdi&gt;</td>
+                <td>Cô lập một phần văn bản có thể được định dạng theo hướng khác với văn bản bên ngoài nó.</td>
+            </tr>
+            <tr>
+                <td>&lt;bdo&gt;</td>
+                <td>Ghi đè hướng văn bản hiện tại.</td>
+            </tr>
+            <tr>
+                <td>&lt;big&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng CSS thay thế. Định nghĩa văn bản lớn.</td>
+            </tr>
+            <tr>
+                <td>&lt;blockquote&gt;</td>
+                <td>Định nghĩa một phần được trích dẫn từ một nguồn khác.</td>
+            </tr>
+            <tr>
+                <td>&lt;center&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng CSS thay thế. Định nghĩa văn bản được căn giữa.</td>
+            </tr>
+            <tr>
+                <td>&lt;cite&gt;</td>
+                <td>Định nghĩa tiêu đề của một tác phẩm.</td>
+            </tr>
+            <tr>
+                <td>&lt;code&gt;</td>
+                <td>Định nghĩa một đoạn mã máy tính.</td>
+            </tr>
+            <tr>
+                <td>&lt;del&gt;</td>
+                <td>Định nghĩa văn bản đã bị xóa khỏi tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;dfn&gt;</td>
+                <td>Chỉ định một thuật ngữ sẽ được định nghĩa trong nội dung.</td>
+            </tr>
+            <tr>
+                <td>&lt;em&gt;</td>
+                <td>Định nghĩa văn bản được nhấn mạnh.</td>
+            </tr>
+            <tr>
+                <td>&lt;font&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng CSS thay thế. Định nghĩa phông chữ, màu sắc và kích thước cho
+                    văn
+                    bản.</td>
+            </tr>
+            <tr>
+                <td>&lt;i&gt;</td>
+                <td>Định nghĩa một phần văn bản bằng giọng nói hoặc tâm trạng thay thế.</td>
+            </tr>
+            <tr>
+                <td>&lt;ins&gt;</td>
+                <td>Định nghĩa văn bản đã được chèn vào tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;kbd&gt;</td>
+                <td>Định nghĩa đầu vào bàn phím.</td>
+            </tr>
+            <tr>
+                <td>&lt;mark&gt;</td>
+                <td>Định nghĩa văn bản được đánh dấu/làm nổi bật.</td>
+            </tr>
+            <tr>
+                <td>&lt;meter&gt;</td>
+                <td>Định nghĩa một phép đo vô hướng trong một phạm vi đã biết (đồng hồ đo).</td>
+            </tr>
+            <tr>
+                <td>&lt;pre&gt;</td>
+                <td>Định nghĩa văn bản được định dạng trước.</td>
+            </tr>
+            <tr>
+                <td>&lt;progress&gt;</td>
+                <td>Đại diện cho tiến trình của một nhiệm vụ.</td>
+            </tr>
+            <tr>
+                <td>&lt;q&gt;</td>
+                <td>Định nghĩa một trích dẫn ngắn.</td>
+            </tr>
+            <tr>
+                <td>&lt;rp&gt;</td>
+                <td>Định nghĩa những gì sẽ hiển thị trong các trình duyệt không hỗ trợ chú thích ruby.</td>
+            </tr>
+            <tr>
+                <td>&lt;rt&gt;</td>
+                <td>Định nghĩa giải thích/phát âm của các ký tự (cho kiểu chữ Đông Á).</td>
+            </tr>
+            <tr>
+                <td>&lt;ruby&gt;</td>
+                <td>Định nghĩa chú thích ruby (cho kiểu chữ Đông Á).</td>
+            </tr>
+            <tr>
+                <td>&lt;s&gt;</td>
+                <td>Định nghĩa văn bản không còn chính xác.</td>
+            </tr>
+            <tr>
+                <td>&lt;samp&gt;</td>
+                <td>Định nghĩa kết quả mẫu từ chương trình máy tính.</td>
+            </tr>
+            <tr>
+                <td>&lt;small&gt;</td>
+                <td>Định nghĩa văn bản nhỏ hơn.</td>
+            </tr>
+            <tr>
+                <td>&lt;strike&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng &lt;del&gt; hoặc &lt;s&gt; thay thế. Định nghĩa văn bản gạch
+                    ngang.</td>
+            </tr>
+            <tr>
+                <td>&lt;strong&gt;</td>
+                <td>Định nghĩa văn bản quan trọng.</td>
+            </tr>
+            <tr>
+                <td>&lt;sub&gt;</td>
+                <td>Định nghĩa văn bản dưới dòng.</td>
+            </tr>
+            <tr>
+                <td>&lt;sup&gt;</td>
+                <td>Định nghĩa văn bản trên dòng.</td>
+            </tr>
+            <tr>
+                <td>&lt;template&gt;</td>
+                <td>Định nghĩa một vùng chứa cho nội dung sẽ bị ẩn khi trang tải.</td>
+            </tr>
+            <tr>
+                <td>&lt;time&gt;</td>
+                <td>Định nghĩa một thời gian cụ thể (hoặc ngày giờ).</td>
+            </tr>
+            <tr>
+                <td>&lt;tt&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng CSS thay thế. Định nghĩa văn bản kiểu teletype.</td>
+            </tr>
+            <tr>
+                <td>&lt;u&gt;</td>
+                <td>Định nghĩa một số văn bản không được phát âm và được định dạng khác với văn bản bình thường.</td>
+            </tr>
+            <tr>
+                <td>&lt;var&gt;</td>
+                <td>Định nghĩa một biến.</td>
+            </tr>
+            <tr>
+                <td>&lt;wbr&gt;</td>
+                <td>Định nghĩa một dòng ngắt có thể có.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.3 Các thẻ form và nhập liệu trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;form&gt;</td>
+                <td>Định nghĩa một biểu mẫu HTML cho người dùng nhập liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;input&gt;</td>
+                <td>Định nghĩa điều khiển đầu vào.</td>
+            </tr>
+            <tr>
+                <td>&lt;textarea&gt;</td>
+                <td>Định nghĩa điều khiển đầu vào nhiều dòng (vùng văn bản).</td>
+            </tr>
+            <tr>
+                <td>&lt;button&gt;</td>
+                <td>Định nghĩa một nút nhấn có thể click được.</td>
+            </tr>
+            <tr>
+                <td>&lt;select&gt;</td>
+                <td>Định nghĩa một danh sách thả xuống.</td>
+            </tr>
+            <tr>
+                <td>&lt;optgroup&gt;</td>
+                <td>Định nghĩa một nhóm các tùy chọn liên quan trong danh sách thả xuống.</td>
+            </tr>
+            <tr>
+                <td>&lt;option&gt;</td>
+                <td>Định nghĩa một tùy chọn trong danh sách thả xuống.</td>
+            </tr>
+            <tr>
+                <td>&lt;label&gt;</td>
+                <td>Định nghĩa nhãn cho phần tử &lt;input&gt;.</td>
+            </tr>
+            <tr>
+                <td>&lt;fieldset&gt;</td>
+                <td>Nhóm các phần tử liên quan trong một biểu mẫu.</td>
+            </tr>
+            <tr>
+                <td>&lt;legend&gt;</td>
+                <td>Định nghĩa chú thích cho phần tử &lt;fieldset&gt;.</td>
+            </tr>
+            <tr>
+                <td>&lt;datalist&gt;</td>
+                <td>Xác định một danh sách các tùy chọn đã được định nghĩa trước cho các điều khiển đầu vào.</td>
+            </tr>
+            <tr>
+                <td>&lt;output&gt;</td>
+                <td>Định nghĩa kết quả của một phép tính.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.4 Các thẻ Frames trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;frame&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Định nghĩa một cửa sổ (khung) trong một tập hợp khung.</td>
+            </tr>
+            <tr>
+                <td>&lt;frameset&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Định nghĩa một tập hợp các khung.</td>
+            </tr>
+            <tr>
+                <td>&lt;noframes&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Định nghĩa nội dung thay thế cho người dùng không hỗ trợ khung.</td>
+            </tr>
+            <tr>
+                <td>&lt;iframe&gt;</td>
+                <td>Định nghĩa một khung nội tuyến.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.5 Các thẻ hình ảnh trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;img&gt;</td>
+                <td>Định nghĩa một hình ảnh.</td>
+            </tr>
+            <tr>
+                <td>&lt;map&gt;</td>
+                <td>Định nghĩa một bản đồ hình ảnh (client-side image map).</td>
+            </tr>
+            <tr>
+                <td>&lt;area&gt;</td>
+                <td>Định nghĩa một khu vực bên trong bản đồ hình ảnh.</td>
+            </tr>
+            <tr>
+                <td>&lt;canvas&gt;</td>
+                <td>Được sử dụng để vẽ đồ họa, một cách nhanh chóng, thông qua kịch bản (thường là JavaScript).</td>
+            </tr>
+            <tr>
+                <td>&lt;figcaption&gt;</td>
+                <td>Định nghĩa chú thích cho phần tử &lt;figure&gt;.</td>
+            </tr>
+            <tr>
+                <td>&lt;figure&gt;</td>
+                <td>Chỉ định nội dung độc lập.</td>
+            </tr>
+            <tr>
+                <td>&lt;picture&gt;</td>
+                <td>Định nghĩa một vùng chứa cho nhiều tài nguyên hình ảnh.</td>
+            </tr>
+            <tr>
+                <td>&lt;svg&gt;</td>
+                <td>Định nghĩa một vùng chứa cho đồ họa SVG.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.6 Các thẻ âm thanh / video trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;audio&gt;</td>
+                <td>Định nghĩa nội dung âm thanh.</td>
+            </tr>
+            <tr>
+                <td>&lt;source&gt;</td>
+                <td>Định nghĩa nhiều tài nguyên phương tiện cho các phần tử phương tiện (&lt;video&gt;, &lt;audio&gt; và
+                    &lt;picture&gt;).</td>
+            </tr>
+            <tr>
+                <td>&lt;track&gt;</td>
+                <td>Định nghĩa các bản nhạc văn bản cho các phần tử phương tiện (&lt;video&gt; và &lt;audio&gt;).</td>
+            </tr>
+            <tr>
+                <td>&lt;video&gt;</td>
+                <td>Định nghĩa một video hoặc phim.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.7 Các thẻ liên kết trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;a&gt;</td>
+                <td>Định nghĩa một siêu liên kết.</td>
+            </tr>
+            <tr>
+                <td>&lt;link&gt;</td>
+                <td>Định nghĩa mối quan hệ giữa tài liệu và tài nguyên bên ngoài (được sử dụng nhiều nhất để liên kết
+                    với
+                    bảng kiểu).</td>
+            </tr>
+            <tr>
+                <td>&lt;nav&gt;</td>
+                <td>Định nghĩa các liên kết điều hướng.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.8 Các thẻ danh sách trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;menu&gt;</td>
+                <td>Định nghĩa một danh sách không có thứ tự thay thế.</td>
+            </tr>
+            <tr>
+                <td>&lt;ul&gt;</td>
+                <td>Định nghĩa một danh sách không có thứ tự.</td>
+            </tr>
+            <tr>
+                <td>&lt;ol&gt;</td>
+                <td>Định nghĩa một danh sách có thứ tự.</td>
+            </tr>
+            <tr>
+                <td>&lt;li&gt;</td>
+                <td>Định nghĩa một mục trong danh sách.</td>
+            </tr>
+            <tr>
+                <td>&lt;dir&gt;</td>
+                <td>Không hỗ trợ trong HTML5. Sử dụng &lt;ul&gt; thay thế. Định nghĩa một danh sách thư mục.</td>
+            </tr>
+            <tr>
+                <td>&lt;dl&gt;</td>
+                <td>Định nghĩa một danh sách mô tả.</td>
+            </tr>
+            <tr>
+                <td>&lt;dt&gt;</td>
+                <td>Định nghĩa một thuật ngữ/tên trong danh sách mô tả.</td>
+            </tr>
+            <tr>
+                <td>&lt;dd&gt;</td>
+                <td>Định nghĩa một mô tả/giá trị của một thuật ngữ trong danh sách mô tả.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.9 Các thẻ bảng trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;table&gt;</td>
+                <td>Định nghĩa một bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;caption&gt;</td>
+                <td>Định nghĩa chú thích cho bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;th&gt;</td>
+                <td>Định nghĩa một ô tiêu đề trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;tr&gt;</td>
+                <td>Định nghĩa một hàng trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;td&gt;</td>
+                <td>Định nghĩa một ô trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;thead&gt;</td>
+                <td>Nhóm nội dung tiêu đề trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;tbody&gt;</td>
+                <td>Nhóm nội dung thân trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;tfoot&gt;</td>
+                <td>Nhóm nội dung chân trong bảng.</td>
+            </tr>
+            <tr>
+                <td>&lt;col&gt;</td>
+                <td>Chỉ định thuộc tính cột cho mỗi cột trong phần tử &lt;colgroup&gt;.</td>
+            </tr>
+            <tr>
+                <td>&lt;colgroup&gt;</td>
+                <td>Chỉ định một nhóm gồm một hoặc nhiều cột trong bảng để định dạng.</td>
+            </tr>
+        </table>
+        <br>
+        <h2> 22.10 Các thẻ Styles và Semantics trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;style&gt;</td>
+                <td>Định nghĩa thông tin kiểu cho tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;div&gt;</td>
+                <td>Định nghĩa một phần trong tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;span&gt;</td>
+                <td>Định nghĩa một phần trong tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;header&gt;</td>
+                <td>Định nghĩa tiêu đề cho tài liệu hoặc phần.</td>
+            </tr>
+            <tr>
+                <td>&lt;hgroup&gt;</td>
+                <td>Định nghĩa tiêu đề và nội dung liên quan.</td>
+            </tr>
+            <tr>
+                <td>&lt;footer&gt;</td>
+                <td>Định nghĩa chân trang cho tài liệu hoặc phần.</td>
+            </tr>
+            <tr>
+                <td>&lt;main&gt;</td>
+                <td>Chỉ định nội dung chính của tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;section&gt;</td>
+                <td>Định nghĩa một phần trong tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;search&gt;</td>
+                <td>Định nghĩa phần tìm kiếm.</td>
+            </tr>
+            <tr>
+                <td>&lt;article&gt;</td>
+                <td>Định nghĩa một bài viết.</td>
+            </tr>
+            <tr>
+                <td>&lt;aside&gt;</td>
+                <td>Định nghĩa nội dung bên cạnh nội dung trang.</td>
+            </tr>
+            <tr>
+                <td>&lt;details&gt;</td>
+                <td>Định nghĩa các chi tiết bổ sung mà người dùng có thể xem hoặc ẩn.</td>
+            </tr>
+            <tr>
+                <td>&lt;dialog&gt;</td>
+                <td>Định nghĩa hộp thoại hoặc cửa sổ.</td>
+            </tr>
+            <tr>
+                <td>&lt;summary&gt;</td>
+                <td>Định nghĩa tiêu đề hiển thị cho phần tử &lt;details&gt;.</td>
+            </tr>
+            <tr>
+                <td>&lt;data&gt;</td>
+                <td>Thêm một bản dịch có thể đọc được bằng máy của nội dung đã cho.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.11 Các thẻ Meta Info trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;head&gt;</td>
+                <td>Định nghĩa thông tin về tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;meta&gt;</td>
+                <td>Định nghĩa siêu dữ liệu về một tài liệu HTML.</td>
+            </tr>
+            <tr>
+                <td>&lt;base&gt;</td>
+                <td>Xác định URL cơ sở/mục tiêu cho tất cả URL tương đối trong một tài liệu.</td>
+            </tr>
+            <tr>
+                <td>&lt;basefont&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng CSS thay thế. Xác định màu sắc, kích thước mặc định và font
+                    chữ
+                    cho toàn bộ văn bản trong tài liệu.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.12 Các thẻ Programming trong HTML</h2>
+        <table>
+            <tr>
+                <th>Thẻ</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>&lt;script&gt;</td>
+                <td>Định nghĩa một kịch bản (script) phía máy khách.</td>
+            </tr>
+            <tr>
+                <td>&lt;noscript&gt;</td>
+                <td>Định nghĩa nội dung thay thế cho người dùng không hỗ trợ các kịch bản phía máy khách.</td>
+            </tr>
+            <tr>
+                <td>&lt;applet&gt;</td>
+                <td>Không được hỗ trợ trong HTML5. Sử dụng &lt;embed&gt; hoặc &lt;object&gt; thay thế. Định nghĩa một
+                    applet
+                    được nhúng.</td>
+            </tr>
+            <tr>
+                <td>&lt;embed&gt;</td>
+                <td>Định nghĩa một vùng chứa cho một ứng dụng bên ngoài (không phải HTML).</td>
+            </tr>
+            <tr>
+                <td>&lt;object&gt;</td>
+                <td>Định nghĩa một đối tượng được nhúng.</td>
+            </tr>
+            <tr>
+                <td>&lt;param&gt;</td>
+                <td>Định nghĩa một tham số cho một đối tượng.</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.13 Tham chiếu thuộc tính HTML</h2>
+        <table>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Thuộc về</th>
+                <th>Mô tả</th>
+            </tr>
+            <tr>
+                <td>accept</td>
+                <td>&lt;input&gt;</td>
+                <td>Chỉ định các loại tệp mà máy chủ chấp nhận (chỉ dành cho type="file")</td>
+            </tr>
+            <tr>
+                <td>accept-charset</td>
+                <td>&lt;form&gt;</td>
+                <td>Chỉ định các bộ mã ký tự sẽ được sử dụng cho việc gửi form</td>
+            </tr>
+            <tr>
+                <td>accesskey</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định một phím tắt để kích hoạt/tập trung vào một phần tử</td>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>&lt;form&gt;</td>
+                <td>Chỉ định nơi gửi dữ liệu biểu mẫu khi biểu mẫu được gửi đi</td>
+            </tr>
+            <tr>
+                <td>align</td>
+                <td>Không được hỗ trợ trong HTML 5.</td>
+                <td>Chỉ định sự căn chỉnh so với các phần tử xung quanh. Sử dụng CSS thay thế</td>
+            </tr>
+            <tr>
+                <td>alt</td>
+                <td>&lt;area&gt;, &lt;img&gt;, &lt;input&gt;</td>
+                <td>Chỉ định văn bản thay thế khi phần tử gốc không thể hiển thị</td>
+            </tr>
+            <tr>
+                <td>async</td>
+                <td>&lt;script&gt;</td>
+                <td>Chỉ định rằng script được thực thi bất đồng bộ (chỉ dành cho các script bên ngoài)</td>
+            </tr>
+            <tr>
+                <td>autocomplete</td>
+                <td>&lt;form&gt;, &lt;input&gt;</td>
+                <td>Chỉ định liệu phần tử &lt;form&gt; hoặc &lt;input&gt; có hỗ trợ tự động điền hay không</td>
+            </tr>
+            <tr>
+                <td>autofocus</td>
+                <td>&lt;button&gt;, &lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định rằng phần tử nên tự động nhận focus khi trang được tải</td>
+            </tr>
+            <tr>
+                <td>autoplay</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Chỉ định rằng âm thanh/video sẽ bắt đầu phát ngay khi sẵn sàng</td>
+            </tr>
+            <tr>
+                <td>bgcolor</td>
+                <td>Không được hỗ trợ trong HTML 5.</td>
+                <td>Chỉ định màu nền của một phần tử. Sử dụng CSS thay thế</td>
+            </tr>
+            <tr>
+                <td>border</td>
+                <td>Không được hỗ trợ trong HTML 5.</td>
+                <td>Chỉ định độ rộng của đường viền của một phần tử. Sử dụng CSS thay thế</td>
+            </tr>
+            <tr>
+                <td>charset</td>
+                <td>&lt;meta&gt;, &lt;script&gt;</td>
+                <td>Chỉ định bộ mã ký tự</td>
+            </tr>
+            <tr>
+                <td>checked</td>
+                <td>&lt;input&gt;</td>
+                <td>Chỉ định rằng một phần tử &lt;input&gt; checkbox hoặc radio nên được chọn sẵn khi trang được tải
+                </td>
+            </tr>
+            <tr>
+                <td>cite</td>
+                <td>&lt;blockquote&gt;, &lt;del&gt;, &lt;ins&gt;, &lt;q&gt;</td>
+                <td>Chỉ định URL giải thích về trích dẫn/đoạn văn bản bị xóa/thêm</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định một hoặc nhiều tên lớp cho một phần tử (tham chiếu tới một lớp trong bảng kiểu)</td>
+            </tr>
+            <tr>
+                <td>color</td>
+                <td>Không được hỗ trợ trong HTML 5.</td>
+                <td>Chỉ định màu văn bản của một phần tử. Sử dụng CSS thay thế</td>
+            </tr>
+            <tr>
+                <td>cols</td>
+                <td>&lt;textarea&gt;</td>
+                <td>Chỉ định chiều rộng hiển thị của một vùng văn bản</td>
+            </tr>
+            <tr>
+                <td>colspan</td>
+                <td>&lt;td&gt;, &lt;th&gt;</td>
+                <td>Chỉ định số cột một ô bảng nên trải rộng</td>
+            </tr>
+            <tr>
+                <td>content</td>
+                <td>&lt;meta&gt;</td>
+                <td>Cung cấp giá trị liên quan đến thuộc tính http-equiv hoặc name</td>
+            </tr>
+            <tr>
+                <td>contenteditable</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định liệu nội dung của một phần tử có thể chỉnh sửa hay không</td>
+            </tr>
+            <tr>
+                <td>controls</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Chỉ định rằng các điều khiển âm thanh/video nên được hiển thị (như nút play/tạm dừng v.v.)</td>
+            </tr>
+            <tr>
+                <td>coords</td>
+                <td>&lt;area&gt;</td>
+                <td>Chỉ định tọa độ của khu vực trong một bản đồ hình ảnh</td>
+            </tr>
+            <tr>
+                <td>data</td>
+                <td>&lt;object&gt;</td>
+                <td>Chỉ định URL của tài nguyên được sử dụng bởi đối tượng</td>
+            </tr>
+            <tr>
+                <td>data-*</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Được sử dụng để lưu trữ dữ liệu tùy chỉnh riêng tư cho trang hoặc ứng dụng</td>
+            </tr>
+            <tr>
+                <td>datetime</td>
+                <td>&lt;del&gt;, &lt;ins&gt;, &lt;time&gt;</td>
+                <td>Chỉ định ngày tháng và giờ</td>
+            </tr>
+            <tr>
+                <td>default</td>
+                <td>&lt;track&gt;</td>
+                <td>Chỉ định rằng track nên được kích hoạt nếu sở thích của người dùng không cho thấy track khác phù hợp
+                    hơn
+                </td>
+            </tr>
+            <tr>
+                <td>defer</td>
+                <td>&lt;script&gt;</td>
+                <td>Chỉ định rằng script nên được thực thi khi trang đã kết thúc phân tích (chỉ dành cho các script bên
+                    ngoài)</td>
+            </tr>
+            <tr>
+                <td>dir</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định hướng văn bản cho nội dung trong một phần tử</td>
+            </tr>
+            <tr>
+                <td>dirname</td>
+                <td>&lt;input&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định hướng văn bản sẽ được gửi đi</td>
+            </tr>
+            <tr>
+                <td>disabled</td>
+                <td>&lt;button&gt;, &lt;fieldset&gt;, &lt;input&gt;, &lt;optgroup&gt;, &lt;option&gt;, &lt;select&gt;,
+                    &lt;textarea&gt;</td>
+                <td>Chỉ định rằng các phần tử cụ thể/nhóm phần tử nên bị vô hiệu hóa</td>
+            </tr>
+            <tr>
+                <td>download</td>
+                <td>&lt;a&gt;, &lt;area&gt;</td>
+                <td>Chỉ định rằng mục tiêu sẽ được tải về khi người dùng nhấp vào liên kết</td>
+            </tr>
+            <tr>
+                <td>draggable</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định liệu một phần tử có thể kéo được hay không</td>
+            </tr>
+            <tr>
+                <td>enctype</td>
+                <td>&lt;form&gt;</td>
+                <td>Chỉ định cách dữ liệu biểu mẫu nên được mã hóa khi gửi nó lên máy chủ (chỉ dành cho method="post")
+                </td>
+            </tr>
+            <tr>
+                <td>enterkeyhint</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định văn bản của phím Enter trên bàn phím ảo</td>
+            </tr>
+            <tr>
+                <td>for</td>
+                <td>&lt;label&gt;, &lt;output&gt;</td>
+                <td>Chỉ định các phần tử biểu mẫu mà một nhãn/phép tính được ràng buộc với</td>
+            </tr>
+            <tr>
+                <td>form</td>
+                <td>&lt;button&gt;, &lt;fieldset&gt;, &lt;input&gt;, &lt;label&gt;, &lt;meter&gt;, &lt;object&gt;,
+                    &lt;output&gt;, &lt;select&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định tên của biểu mẫu mà phần tử thuộc về</td>
+            </tr>
+            <tr>
+                <td>formaction</td>
+                <td>&lt;button&gt;, &lt;input&gt;</td>
+                <td>Chỉ định nơi gửi dữ liệu biểu mẫu khi biểu mẫu được gửi đi. Chỉ dành cho type="submit"</td>
+            </tr>
+            <tr>
+                <td>headers</td>
+                <td>&lt;td&gt;, &lt;th&gt;</td>
+                <td>Chỉ định một hoặc nhiều ô tiêu đề mà ô này liên quan đến</td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td>&lt;canvas&gt;, &lt;embed&gt;, &lt;iframe&gt;, &lt;img&gt;, &lt;input&gt;, &lt;object&gt;,
+                    &lt;video&gt;
+                </td>
+                <td>Chỉ định chiều cao của phần tử</td>
+            </tr>
+            <tr>
+                <td>hidden</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định rằng một phần tử không còn phù hợp hoặc không còn có ý nghĩa nữa</td>
+            </tr>
+            <tr>
+                <td>high</td>
+                <td>&lt;meter&gt;</td>
+                <td>Chỉ định khoảng mà được coi là giá trị cao</td>
+            </tr>
+            <tr>
+                <td>href</td>
+                <td>&lt;a&gt;, &lt;area&gt;, &lt;base&gt;, &lt;link&gt;</td>
+                <td>Chỉ định URL của trang liên kết dẫn đến</td>
+            </tr>
+            <tr>
+                <td>hreflang</td>
+                <td>&lt;a&gt;, &lt;area&gt;, &lt;link&gt;</td>
+                <td>Chỉ định ngôn ngữ của tài liệu liên kết</td>
+            </tr>
+            <tr>
+                <td>http-equiv</td>
+                <td>&lt;meta&gt;</td>
+                <td>Cung cấp một tiêu đề HTTP cho thông tin/giá trị của thuộc tính nội dung</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định một id duy nhất cho một phần tử</td>
+            </tr>
+            <tr>
+                <td>inert</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định rằng trình duyệt nên bỏ qua phần này</td>
+            </tr>
+            <tr>
+                <td>inputmode</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định chế độ của bàn phím ảo</td>
+            </tr>
+            <tr>
+                <td>ismap</td>
+                <td>&lt;img&gt;</td>
+                <td>Chỉ định một hình ảnh là bản đồ hình ảnh phía máy chủ</td>
+            </tr>
+            <tr>
+                <td>kind</td>
+                <td>&lt;track&gt;</td>
+                <td>Chỉ định loại dữ liệu văn bản</td>
+            </tr>
+            <tr>
+                <td>label</td>
+                <td>&lt;track&gt;, &lt;option&gt;, &lt;optgroup&gt;</td>
+                <td>Chỉ định tiêu đề của track văn bản</td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td>Thuộc tính toàn cục</td>
+                <td>Chỉ định ngôn ngữ của nội dung phần tử</td>
+            </tr>
+            <tr>
+                <td>list</td>
+                <td>&lt;input&gt;</td>
+                <td>Tham chiếu đến một phần tử &lt;datalist&gt; chứa các tùy chọn được định nghĩa trước cho một phần tử
+                    &lt;input&gt;</td>
+            </tr>
+            <tr>
+                <td>loop</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Chỉ định rằng âm thanh/video sẽ bắt đầu lại từ đầu mỗi khi kết thúc</td>
+            </tr>
+            <tr>
+                <td>low</td>
+                <td>&lt;meter&gt;</td>
+                <td>Chỉ định khoảng mà được coi là giá trị thấp</td>
+            </tr>
+            <tr>
+                <td>max</td>
+                <td>&lt;input&gt;, &lt;meter&gt;, &lt;progress&gt;</td>
+                <td>Chỉ định giá trị tối đa</td>
+            </tr>
+            <tr>
+                <td>maxlength</td>
+                <td>&lt;input&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định số ký tự tối đa được phép trong một phần tử</td>
+            </tr>
+            <tr>
+                <td>media</td>
+                <td>&lt;a&gt;, &lt;area&gt;, &lt;link&gt;, &lt;source&gt;, &lt;style&gt;</td>
+                <td>Chỉ định phương tiện/thiết bị tài liệu liên kết được tối ưu hóa cho</td>
+            </tr>
+            <tr>
+                <td>method</td>
+                <td>&lt;form&gt;</td>
+                <td>Chỉ định phương thức HTTP để sử dụng khi gửi dữ liệu biểu mẫu</td>
+            </tr>
+            <tr>
+                <td>min</td>
+                <td>&lt;input&gt;, &lt;meter&gt;</td>
+                <td>Chỉ định giá trị tối thiểu</td>
+            </tr>
+            <tr>
+                <td>multiple</td>
+                <td>&lt;input&gt;, &lt;select&gt;</td>
+                <td>Chỉ định rằng người dùng có thể nhập nhiều giá trị</td>
+            </tr>
+            <tr>
+                <td>muted</td>
+                <td>&lt;video&gt;, &lt;audio&gt;</td>
+                <td>Chỉ định rằng đầu ra âm thanh của video nên được tắt tiếng</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>&lt;button&gt;, &lt;fieldset&gt;, &lt;form&gt;, &lt;iframe&gt;, &lt;input&gt;, &lt;map&gt;,
+                    &lt;meta&gt;, &lt;object&gt;, &lt;output&gt;, &lt;param&gt;, &lt;select&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định tên của phần tử</td>
+            </tr>
+            <tr>
+                <td>novalidate</td>
+                <td>&lt;form&gt;</td>
+                <td>Chỉ định rằng biểu mẫu không nên được xác thực khi gửi</td>
+            </tr>
+            <tr>
+            <tr>
+                <td>onabort</td>
+                <td>&lt;audio&gt;, &lt;embed&gt;, &lt;img&gt;, &lt;object&gt;, &lt;video&gt;</td>
+                <td>Kịch bản được chạy khi tải về bị hủy bỏ (abort)</td>
+            </tr>
+            <tr>
+                <td>onafterprint</td>
+                <td>&lt;body&gt;</td>
+                <td>Kịch bản được chạy sau khi tài liệu được in</td>
+            </tr>
+            <tr>
+                <td>onbeforeprint</td>
+                <td>&lt;body&gt;</td>
+                <td>Kịch bản được chạy trước khi tài liệu được in</td>
+            </tr>
+            <tr>
+                <td>onbeforeunload</td>
+                <td>&lt;body&gt;</td>
+                <td>Kịch bản được chạy khi tài liệu chuẩn bị bị thoát (unload)</td>
+            </tr>
+            <tr>
+                <td>onblur</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi phần tử mất focus</td>
+            </tr>
+            <tr>
+                <td>oncanplay</td>
+                <td>&lt;audio&gt;, &lt;embed&gt;, &lt;object&gt;, &lt;video&gt;</td>
+                <td>Kịch bản được chạy khi tệp âm thanh/video sẵn sàng để phát (khi đã đủ dữ liệu đệm để bắt đầu)</td>
+            </tr>
+            <tr>
+                <td>oncanplaythrough</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Kịch bản được chạy khi tệp âm thanh/video có thể phát từ đầu đến cuối mà không cần dừng để đệm thêm
+                    dữ
+                    liệu</td>
+            </tr>
+            <tr>
+                <td>onchange</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi giá trị của phần tử thay đổi</td>
+            </tr>
+            <tr>
+                <td>onclick</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi phần tử được nhấp chuột</td>
+            </tr>
+            <tr>
+                <td>oncontextmenu</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi menu ngữ cảnh được kích hoạt</td>
+            </tr>
+            <tr>
+                <td>oncopy</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi nội dung của phần tử đang được sao chép</td>
+            </tr>
+            <tr>
+                <td>oncuechange</td>
+                <td>&lt;track&gt;</td>
+                <td>Kịch bản được chạy khi dòng lệnh thay đổi trong một phần tử &lt;track&gt;</td>
+            </tr>
+            <tr>
+                <td>oncut</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi nội dung của phần tử đang được cắt</td>
+            </tr>
+            <tr>
+                <td>ondblclick</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi phần tử được nhấp đúp chuột</td>
+            </tr>
+            <tr>
+                <td>ondrag</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi phần tử đang được kéo</td>
+            </tr>
+            <tr>
+                <td>ondragend</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi hoạt động kéo thả kết thúc</td>
+            </tr>
+            <tr>
+                <td>ondragenter</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi một phần tử đã được kéo vào một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragleave</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi một phần tử rời khỏi một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragover</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi một phần tử đang được kéo qua một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragstart</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi hoạt động kéo thả bắt đầu</td>
+            </tr>
+            <tr>
+                <td>ondrop</td>
+                <td>All visible elements</td>
+                <td>Kịch bản được chạy khi phần tử được kéo thả được thả vào</td>
+            </tr>
+            <tr>
+                <td>ondurationchange</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Kịch bản được chạy khi chiều dài của phương tiện thay đổi</td>
+            </tr>
+            <tr>
+                <td>onemptied</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Kịch bản được chạy khi có điều gì đó xấu xảy ra và tệp đột nhiên không có sẵn nữa (ví dụ: bị mất kết
+                    nối
+                    một cách bất ngờ)</td>
+            </tr>
+            <tr>
+                <td>onended</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện đã phát xong</td>
+            </tr>
+            <tr>
+                <td>onerror</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi có lỗi xảy ra với một phần tử khi nó tải lên</td>
+            </tr>
+            <tr>
+                <td>onfocus</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi phần tử nhận được tiêu điểm</td>
+            </tr>
+            <tr>
+                <td>oninput</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi giá trị của một phần tử được thay đổi (nhập văn bản vào một &lt;input&gt; hoặc
+                    &lt;textarea&gt;)</td>
+            </tr>
+            <tr>
+                <td>oninvalid</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi một phần tử không hợp lệ</td>
+            </tr>
+            <tr>
+                <td>onkeydown</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi một phím được nhấn xuống</td>
+            </tr>
+            <tr>
+                <td>onkeypress</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi một phím được nhấn và giữ lại</td>
+            </tr>
+            <tr>
+                <td>onkeyup</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi một phím được nhấc lên</td>
+            </tr>
+            <tr>
+                <td>onload</td>
+                <td>&lt;body&gt;, &lt;iframe&gt;, &lt;img&gt;, &lt;input type="image"&gt;, &lt;link&gt;, &lt;script&gt;,
+                    &lt;style&gt;</td>
+                <td>Đoạn mã để chạy khi phần tử đã tải hoàn toàn</td>
+            </tr>
+            <tr>
+                <td>onloadeddata</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi dữ liệu đã tải đầy đủ trong một phương tiện</td>
+            </tr>
+            <tr>
+                <td>onloadedmetadata</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi siêu dữ liệu đã tải đầy đủ trong một phương tiện</td>
+            </tr>
+            <tr>
+                <td>onloadstart</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi một phương tiện bắt đầu tải</td>
+            </tr>
+            <tr>
+                <td>onmousedown</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi nút chuột xuống</td>
+            </tr>
+            <tr>
+                <td>onmouseenter</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi con trỏ chuột đi vào khu vực của một phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseleave</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi con trỏ chuột rời khỏi khu vực của một phần tử</td>
+            </tr>
+            <tr>
+                <td>onmousemove</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi con trỏ chuột di chuyển</td>
+            </tr>
+            <tr>
+                <td>onmouseout</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi con trỏ chuột rời khỏi một phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseover</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi con trỏ chuột đi qua một phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseup</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi nút chuột được nhả ra</td>
+            </tr>
+            <tr>
+                <td>onpause</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện đã tạm dừng</td>
+            </tr>
+            <tr>
+                <td>onplay</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện bắt đầu phát</td>
+            </tr>
+            <tr>
+                <td>onplaying</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện bắt đầu phát sau khi tạm dừng hoặc chờ đợi</td>
+            </tr>
+            <tr>
+                <td>onprogress</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện đang tải</td>
+            </tr>
+            <tr>
+                <td>onratechange</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi tốc độ phương tiện thay đổi</td>
+            </tr>
+            <tr>
+                <td>onreset</td>
+                <td>&lt;form&gt;</td>
+                <td>Đoạn mã để chạy khi biểu mẫu được thiết lập lại</td>
+            </tr>
+            <tr>
+                <td>onresize</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi kích thước của cửa sổ trình duyệt thay đổi</td>
+            </tr>
+            <tr>
+                <td>onscroll</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi người dùng cuộn thanh cuộn của một phần tử</td>
+            </tr>
+            <tr>
+                <td>onseeked</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi đang tìm kiếm để kết thúc</td>
+            </tr>
+            <tr>
+                <td>onseeking</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi đang tìm kiếm</td>
+            </tr>
+            <tr>
+                <td>onselect</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Đoạn mã để chạy khi người dùng chọn nội dung trong một &lt;input&gt; hoặc &lt;textarea&gt;</td>
+            </tr>
+            <tr>
+                <td>onshow</td>
+                <td>&lt;menu&gt;</td>
+                <td>Đoạn mã để chạy khi menu ngữ cảnh được hiển thị</td>
+            </tr>
+            <tr>
+                <td>onstalled</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi không thể tải được phương tiện</td>
+            </tr>
+            <tr>
+                <td>onsubmit</td>
+                <td>&lt;form&gt;</td>
+                <td>Đoạn mã để chạy khi biểu mẫu được gửi</td>
+            </tr>
+            <tr>
+                <td>onsuspend</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện đã tạm dừng tải</td>
+            </tr>
+            <tr>
+                <td>ontimeupdate</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi thời gian phương tiện thay đổi</td>
+            </tr>
+            <tr>
+                <td>ontoggle</td>
+                <td>&lt;details&gt;</td>
+                <td>Đoạn mã để chạy khi thẻ &lt;details&gt; mở hoặc đóng</td>
+            </tr>
+            <tr>
+                <td>onvolumechange</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi âm lượng phương tiện thay đổi</td>
+            </tr>
+            <tr>
+                <td>onwaiting</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Đoạn mã để chạy khi phương tiện đang chờ đợi</td>
+            </tr>
+            <tr>
+                <td>open</td>
+                <td>&lt;details&gt;</td>
+                <td>Chỉ định rằng chi tiết nên mở ra mặc định</td>
+            </tr>
+            <tr>
+                <td>optimum</td>
+                <td>&lt;meter&gt;</td>
+                <td>Chỉ định giá trị lý tưởng của một đoạn dữ liệu</td>
+            </tr>
+            <tr>
+                <td>pattern</td>
+                <td>&lt;input&gt;</td>
+                <td>Chỉ định một biểu thức chính quy mà giá trị của một &lt;input&gt; phải phù hợp với</td>
+            </tr>
+            <tr>
+                <td>placeholder</td>
+                <td>&lt;input&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định một văn bản giới thiệu (placeholder) trong một phần tử</td>
+            </tr>
+            <tr>
+                <td>poster</td>
+                <td>&lt;video&gt;</td>
+                <td>Chỉ định một ảnh để hiển thị thay thế khi video không được phát</td>
+            </tr>
+            <tr>
+                <td>preload</td>
+                <td>&lt;audio&gt;, &lt;video&gt;</td>
+                <td>Chỉ định liệu phương tiện có nên được tải khi trang web tải</td>
+            </tr>
+            <tr>
+                <td>readonly</td>
+                <td>&lt;input&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định rằng một phần tử là chỉ đọc</td>
+            </tr>
+            <tr>
+                <td>rel</td>
+                <td>&lt;a&gt;, &lt;area&gt;, &lt;link&gt;</td>
+                <td>Chỉ định mối quan hệ giữa tài liệu hiện tại và tài liệu liên kết (href)</td>
+            </tr>
+            <tr>
+                <td>required</td>
+                <td>&lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;</td>
+                <td>Chỉ định rằng một phần tử phải được điền vào trước khi gửi biểu mẫu</td>
+            </tr>
+            <tr>
+                <td>reversed</td>
+                <td>&lt;ol&gt;</td>
+                <td>Chỉ định rằng danh sách có thứ tự nên được hiển thị theo thứ tự ngược lại</td>
+            </tr>
+            <tr>
+                <td>rows</td>
+                <td>&lt;textarea&gt;</td>
+                <td>Chỉ định số hàng của phần tử &lt;textarea&gt;</td>
+            </tr>
+            <tr>
+                <td>rowspan</td>
+                <td>&lt;td&gt;, &lt;th&gt;</td>
+                <td>Chỉ định số lượng hàng mà một cell nên trải dài</td>
+            </tr>
+            <tr>
+                <td>sandbox</td>
+                <td>&lt;iframe&gt;</td>
+                <td>Chỉ định rằng tất cả các nội dung trong khung iframe nên được hiển thị trong một không gian cát</td>
+            </tr>
+            <tr>
+                <td>scope</td>
+                <td>&lt;th&gt;</td>
+                <td>Chỉ định rằng một thẻ &lt;th&gt; là tiêu đề cho một cột, hàng hoặc cả bảng</td>
+            </tr>
+            <tr>
+                <td>selected</td>
+                <td>&lt;option&gt;</td>
+                <td>Chỉ định rằng một mục &lt;option&gt; nên được chọn mặc định</td>
+            </tr>
+            <tr>
+                <td>shape</td>
+                <td>&lt;a&gt;, &lt;area&gt;</td>
+                <td>Chỉ định dạng hình dạng mà khu vực đường liên kết bao gồm</td>
+            </tr>
+            <tr>
+                <td>size</td>
+                <td>&lt;input&gt;, &lt;select&gt;</td>
+                <td>Chỉ định kích thước của một phần tử</td>
+            </tr>
+            <tr>
+                <td>sizes</td>
+                <td>&lt;link&gt;</td>
+                <td>Chỉ định kích thước của tài nguyên được liên kết</td>
+            </tr>
+            <tr>
+                <td>span</td>
+                <td>&lt;col&gt;, &lt;colgroup&gt;</td>
+                <td>Chỉ định số cột mà một cột nên trải dài</td>
+            </tr>
+            <tr>
+                <td>spellcheck</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Chỉ định liệu văn bản của một phần tử có nên được kiểm tra chính tả hay không</td>
+            </tr>
+            <tr>
+                <td>src</td>
+                <td>&lt;audio&gt;, &lt;embed&gt;, &lt;iframe&gt;, &lt;img&gt;, &lt;input type="image"&gt;,
+                    &lt;script&gt;,
+                    &lt;source&gt;, &lt;track&gt;, &lt;video&gt;</td>
+                <td>Chỉ định địa chỉ của tài nguyên được liên kết để tải</td>
+            </tr>
+            <tr>
+                <td>srcdoc</td>
+                <td>&lt;iframe&gt;</td>
+                <td>Chỉ định nội dung HTML của tài liệu được hiển thị trong khung iframe</td>
+            </tr>
+            <tr>
+                <td>srclang</td>
+                <td>&lt;track&gt;</td>
+                <td>Chỉ định ngôn ngữ của track text trong video hoặc audio</td>
+            </tr>
+            <tr>
+                <td>srcset</td>
+                <td>&lt;img&gt;, &lt;source&gt;</td>
+                <td>Chỉ định các hình ảnh khác nhau cho các thiết bị khác nhau, để sử dụng bao gồm khi sử dụng ảnh</td>
+            </tr>
+            <tr>
+                <td>start</td>
+                <td>&lt;ol&gt;</td>
+                <td>Chỉ định giá trị bắt đầu của danh sách có thứ tự</td>
+            </tr>
+            <tr>
+                <td>step</td>
+                <td>&lt;input type="number"&gt;, &lt;input type="range"&gt;</td>
+                <td>Chỉ định phần bước khi tăng giá trị một phần tử số học</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Chỉ định kiểu css nội tuyến cho một phần tử</td>
+            </tr>
+            <tr>
+                <td>summary</td>
+                <td>&lt;table&gt;</td>
+                <td>Chỉ định một văn bản ngắn mô tả nội dung của một bảng</td>
+            </tr>
+            <tr>
+                <td>tabindex</td>
+                <td>Tất cả các phần tử hiển thị</td>
+                <td>Chỉ định thứ tự khi một phần tử nhận được trên trình duyệt khi sử dụng phím tab</td>
+            </tr>
+            <tr>
+                <td>target</td>
+                <td>&lt;a&gt;, &lt;area&gt;, &lt;base&gt;, &lt;form&gt;</td>
+                <td>Chỉ định nơi nội dung của một liên kết hoặc hình ảnh sẽ hiển thị khi được kích vào</td>
+            </tr>
+            <tr>
+                <td>translate</td>
+                <td>Global Attributes</td>
+                <td>Chỉ định liệu nội dung của phần tử có nên được dịch hay không</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>&lt;a&gt;, &lt;button&gt;, &lt;embed&gt;, &lt;input&gt;, &lt;link&gt;, &lt;menu&gt;, &lt;object&gt;,
+                    &lt;script&gt;, &lt;source&gt;, &lt;style&gt;</td>
+                <td>Chỉ định loại của phần tử (ví dụ: kiểu nút trong &lt;button&gt;, kiểu phương tiện trong
+                    &lt;source&gt;)
+                </td>
+            </tr>
+            <tr>
+                <td>usemap</td>
+                <td>&lt;img&gt;, &lt;object&gt;</td>
+                <td>Chỉ định một hình ảnh là một bản đồ hình ảnh phía máy chủ</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>&lt;button&gt;, &lt;input&gt;, &lt;li&gt;, &lt;option&gt;, &lt;meter&gt;, &lt;progress&gt;,
+                    &lt;param&gt;</td>
+                <td>Chỉ định giá trị của phần tử (ví dụ: giá trị của nút trong &lt;button&gt;, giá trị của thanh tiến độ
+                    trong &lt;progress&gt;)</td>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td>&lt;canvas&gt;, &lt;embed&gt;, &lt;iframe&gt;, &lt;img&gt;, &lt;input&gt;, &lt;object&gt;,
+                    &lt;video&gt;
+                </td>
+                <td>Chỉ định chiều rộng của phần tử (ví dụ: chiều rộng của hình ảnh trong &lt;img&gt;, chiều rộng của
+                    video
+                    trong &lt;video&gt;)</td>
+            </tr>
+            <tr>
+                <td>wrap</td>
+                <td>&lt;textarea&gt;</td>
+                <td>Chỉ định cách mà văn bản trong một vùng văn bản sẽ được bao quanh khi gửi trong một biểu mẫu</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.14 Thuộc Tính Toàn Cầu HTML</h2>
+        <table>
+            <tr>
+                <th>Thuộc Tính</th>
+                <th>Mô Tả</th>
+            </tr>
+            <tr>
+                <td>accesskey</td>
+                <td>Chỉ định phím tắt để kích hoạt/đưa focus vào một phần tử</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>Chỉ định một hoặc nhiều tên lớp cho một phần tử (tham chiếu đến một lớp trong bảng kiểu)</td>
+            </tr>
+            <tr>
+                <td>contenteditable</td>
+                <td>Chỉ định liệu nội dung của một phần tử có thể chỉnh sửa được hay không</td>
+            </tr>
+            <tr>
+                <td>data-*</td>
+                <td>Dùng để lưu trữ dữ liệu tùy chỉnh riêng tư cho trang hoặc ứng dụng</td>
+            </tr>
+            <tr>
+                <td>dir</td>
+                <td>Chỉ định hướng văn bản cho nội dung trong một phần tử</td>
+            </tr>
+            <tr>
+                <td>draggable</td>
+                <td>Chỉ định liệu một phần tử có thể kéo được hay không</td>
+            </tr>
+            <tr>
+                <td>enterkeyhint</td>
+                <td>Chỉ định văn bản của phím Enter trên bàn phím ảo</td>
+            </tr>
+            <tr>
+                <td>hidden</td>
+                <td>Chỉ định rằng một phần tử chưa được hoặc không còn phù hợp</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>Chỉ định một id duy nhất cho một phần tử</td>
+            </tr>
+            <tr>
+                <td>inert</td>
+                <td>Chỉ định rằng trình duyệt nên bỏ qua phần này</td>
+            </tr>
+            <tr>
+                <td>inputmode</td>
+                <td>Chỉ định chế độ của bàn phím ảo</td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td>Chỉ định ngôn ngữ của nội dung của phần tử</td>
+            </tr>
+            <tr>
+                <td>popover</td>
+                <td>Chỉ định một phần tử popover</td>
+            </tr>
+            <tr>
+                <td>spellcheck</td>
+                <td>Chỉ định liệu phần tử có nên kiểm tra chính tả và ngữ pháp hay không</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>Chỉ định một kiểu CSS nội tuyến cho một phần tử</td>
+            </tr>
+            <tr>
+                <td>tabindex</td>
+                <td>Chỉ định thứ tự tab của một phần tử</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>Chỉ định thông tin bổ sung về một phần tử</td>
+            </tr>
+            <tr>
+                <td>translate</td>
+                <td>Chỉ định liệu nội dung của một phần tử có nên được dịch hay không</td>
+            </tr>
+        </table>
+        <h2>22.15 HTML Event Attributes (Thuộc tính sự kiện)</h2>
+        <br>
+        <table>
+            <caption>Thuộc tính sự kiện cửa sổ</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>onafterprint</td>
+                <td>script</td>
+                <td>Script được chạy sau khi tài liệu được in</td>
+            </tr>
+            <tr>
+                <td>onbeforeprint</td>
+                <td>script</td>
+                <td>Script được chạy trước khi tài liệu được in</td>
+            </tr>
+            <tr>
+                <td>onbeforeunload</td>
+                <td>script</td>
+                <td>Script được chạy khi tài liệu sắp được thoát ra khỏi</td>
+            </tr>
+            <tr>
+                <td>onerror</td>
+                <td>script</td>
+                <td>Script được chạy khi xảy ra lỗi</td>
+            </tr>
+            <tr>
+                <td>onhashchange</td>
+                <td>script</td>
+                <td>Script được chạy khi phần anchor của URL thay đổi</td>
+            </tr>
+            <tr>
+                <td>onload</td>
+                <td>script</td>
+                <td>Được kích hoạt sau khi trang đã tải xong</td>
+            </tr>
+            <tr>
+                <td>onmessage</td>
+                <td>script</td>
+                <td>Script được chạy khi tin nhắn được kích hoạt</td>
+            </tr>
+            <tr>
+                <td>onoffline</td>
+                <td>script</td>
+                <td>Script được chạy khi trình duyệt bắt đầu làm việc offline</td>
+            </tr>
+            <tr>
+                <td>ononline</td>
+                <td>script</td>
+                <td>Script được chạy khi trình duyệt bắt đầu làm việc online</td>
+            </tr>
+            <tr>
+                <td>onpagehide</td>
+                <td>script</td>
+                <td>Script được chạy khi người dùng điều hướng ra khỏi trang</td>
+            </tr>
+            <tr>
+                <td>onpageshow</td>
+                <td>script</td>
+                <td>Script được chạy khi người dùng điều hướng đến một trang</td>
+            </tr>
+            <tr>
+                <td>onpopstate</td>
+                <td>script</td>
+                <td>Script được chạy khi lịch sử của cửa sổ thay đổi</td>
+            </tr>
+            <tr>
+                <td>onresize</td>
+                <td>script</td>
+                <td>Được kích hoạt khi cửa sổ trình duyệt được thay đổi kích thước</td>
+            </tr>
+            <tr>
+                <td>onstorage</td>
+                <td>script</td>
+                <td>Script được chạy khi một khu vực Lưu trữ Web được cập nhật</td>
+            </tr>
+            <tr>
+                <td>onunload</td>
+                <td>script</td>
+                <td>Được kích hoạt sau khi một trang đã được tải xong (hoặc cửa sổ trình duyệt đã được đóng)</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Biểu mẫu sự kiện</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>onblur</td>
+                <td>script</td>
+                <td>Được kích hoạt ngay khi phần tử mất điểm fokus</td>
+            </tr>
+            <tr>
+                <td>onchange</td>
+                <td>script</td>
+                <td>Được kích hoạt ngay khi giá trị của phần tử thay đổi</td>
+            </tr>
+            <tr>
+                <td>oncontextmenu</td>
+                <td>script</td>
+                <td>Script được chạy khi một menu ngữ cảnh được kích hoạt</td>
+            </tr>
+            <tr>
+                <td>onfocus</td>
+                <td>script</td>
+                <td>Được kích hoạt ngay khi phần tử nhận được điểm fokus</td>
+            </tr>
+            <tr>
+                <td>oninput</td>
+                <td>script</td>
+                <td>Script được chạy khi người dùng nhập liệu vào phần tử</td>
+            </tr>
+            <tr>
+                <td>oninvalid</td>
+                <td>script</td>
+                <td>Script được chạy khi phần tử không hợp lệ</td>
+            </tr>
+            <tr>
+                <td>onreset</td>
+                <td>script</td>
+                <td>Được kích hoạt khi nút Reset trong một biểu mẫu được nhấp</td>
+            </tr>
+            <tr>
+                <td>onsearch</td>
+                <td>script</td>
+                <td>Được kích hoạt khi người dùng viết gì đó trong ô tìm kiếm (cho <input="search">)</td>
+            </tr>
+            <tr>
+                <td>onselect</td>
+                <td>script</td>
+                <td>Được kích hoạt sau khi một số văn bản đã được chọn trong một phần tử</td>
+            </tr>
+            <tr>
+                <td>onsubmit</td>
+                <td>script</td>
+                <td>Được kích hoạt khi một biểu mẫu được gửi đi</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện bàn phím</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>onkeydown</td>
+                <td>script</td>
+                <td>Được kích hoạt khi người dùng đang nhấn một phím bàn phím</td>
+            </tr>
+            <tr>
+                <td>onkeypress</td>
+                <td>script</td>
+                <td>Được kích hoạt khi người dùng nhấn một phím bàn phím</td>
+            </tr>
+            <tr>
+                <td>onkeyup</td>
+                <td>script</td>
+                <td>Được kích hoạt khi người dùng nhả một phím bàn phím</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện chuột</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>onclick</td>
+                <td>script</td>
+                <td>Kích hoạt khi người dùng nhấp chuột vào phần tử</td>
+            </tr>
+            <tr>
+                <td>ondblclick</td>
+                <td>script</td>
+                <td>Kích hoạt khi người dùng nhấp chuột hai lần vào phần tử</td>
+            </tr>
+            <tr>
+                <td>onmousedown</td>
+                <td>script</td>
+                <td>Kích hoạt khi người dùng nhấn một nút chuột xuống trên phần tử</td>
+            </tr>
+            <tr>
+                <td>onmousemove</td>
+                <td>script</td>
+                <td>Kích hoạt khi con trỏ chuột đang di chuyển trên phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseout</td>
+                <td>script</td>
+                <td>Kích hoạt khi con trỏ chuột rời khỏi phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseover</td>
+                <td>script</td>
+                <td>Kích hoạt khi con trỏ chuột di chuyển vào phần tử</td>
+            </tr>
+            <tr>
+                <td>onmouseup</td>
+                <td>script</td>
+                <td>Kích hoạt khi người dùng nhả nút chuột lên trên phần tử</td>
+            </tr>
+            <tr>
+                <td>onmousewheel</td>
+                <td>script</td>
+                <td>Đã lỗi thời. Sử dụng thuộc tính onwheel thay thế.</td>
+            </tr>
+            <tr>
+                <td>onwheel</td>
+                <td>script</td>
+                <td>Kích hoạt khi bánh xe chuột lăn lên hoặc xuống trên phần tử</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Kéo các sự kiện</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>ondrag</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phần tử đang được kéo</td>
+            </tr>
+            <tr>
+                <td>ondragend</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi kết thúc một thao tác kéo</td>
+            </tr>
+            <tr>
+                <td>ondragenter</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi một phần tử đã được kéo vào một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragleave</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi một phần tử rời khỏi một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragover</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi một phần tử đang được kéo qua một mục tiêu thả hợp lệ</td>
+            </tr>
+            <tr>
+                <td>ondragstart</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi bắt đầu một thao tác kéo</td>
+            </tr>
+            <tr>
+                <td>ondrop</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phần tử được kéo và thả</td>
+            </tr>
+            <tr>
+                <td>onscroll</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi thanh cuộn của phần tử đang được cuộn</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện clipboard</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>oncopy</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi người dùng sao chép nội dung của một phần tử</td>
+            </tr>
+            <tr>
+                <td>oncut</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi người dùng cắt nội dung của một phần tử</td>
+            </tr>
+            <tr>
+                <td>onpaste</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi người dùng dán nội dung vào một phần tử</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện truyền thông</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>onabort</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi hủy bỏ</td>
+            </tr>
+            <tr>
+                <td>oncanplay</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi tệp đã sẵn sàng để bắt đầu phát (khi đã đệm đủ để bắt đầu)</td>
+            </tr>
+            <tr>
+                <td>oncanplaythrough</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi tệp có thể phát hết mà không cần tạm dừng để đệm</td>
+            </tr>
+            <tr>
+                <td>oncuechange</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi cue thay đổi trong phần tử &lt;track&gt;</td>
+            </tr>
+            <tr>
+                <td>ondurationchange</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi độ dài của phương tiện thay đổi</td>
+            </tr>
+            <tr>
+                <td>onemptied</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi có sự cố xảy ra và tệp đột ngột không khả dụng (như mất kết nối đột ngột)
+                </td>
+            </tr>
+            <tr>
+                <td>onended</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phương tiện đã phát đến cuối (một sự kiện hữu ích cho các thông điệp như "cảm
+                    ơn
+                    đã nghe")</td>
+            </tr>
+            <tr>
+                <td>onerror</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi có lỗi xảy ra khi tải tệp</td>
+            </tr>
+            <tr>
+                <td>onloadeddata</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi dữ liệu phương tiện đã được tải</td>
+            </tr>
+            <tr>
+                <td>onloadedmetadata</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi siêu dữ liệu (như kích thước và độ dài) đã được tải</td>
+            </tr>
+            <tr>
+                <td>onloadstart</td>
+                <td>script</td>
+                <td>Kịch bản được chạy ngay khi tệp bắt đầu tải trước khi bất cứ thứ gì thực sự được tải</td>
+            </tr>
+            <tr>
+                <td>onpause</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phương tiện bị tạm dừng bởi người dùng hoặc bằng chương trình</td>
+            </tr>
+            <tr>
+                <td>onplay</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phương tiện sẵn sàng để bắt đầu phát</td>
+            </tr>
+            <tr>
+                <td>onplaying</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phương tiện thực sự bắt đầu phát</td>
+            </tr>
+            <tr>
+                <td>onprogress</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi trình duyệt đang trong quá trình lấy dữ liệu phương tiện</td>
+            </tr>
+            <tr>
+                <td>onratechange</td>
+                <td>script</td>
+                <td>Kịch bản được chạy mỗi khi tốc độ phát lại thay đổi (như khi người dùng chuyển sang chế độ chậm hoặc
+                    nhanh)</td>
+            </tr>
+            <tr>
+                <td>onseeked</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi thuộc tính seeking được đặt thành false cho biết rằng việc tìm kiếm đã kết
+                    thúc
+                </td>
+            </tr>
+            <tr>
+                <td>onseeking</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi thuộc tính seeking được đặt thành true cho biết rằng việc tìm kiếm đang hoạt
+                    động
+                </td>
+            </tr>
+            <tr>
+                <td>onstalled</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi trình duyệt không thể lấy dữ liệu phương tiện vì bất kỳ lý do gì</td>
+            </tr>
+            <tr>
+                <td>onsuspend</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi việc lấy dữ liệu phương tiện bị dừng trước khi hoàn toàn tải vì bất kỳ lý do
+                    gì
+                </td>
+            </tr>
+            <tr>
+                <td>ontimeupdate</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi vị trí phát đã thay đổi (như khi người dùng tua nhanh đến một điểm khác trong
+                    phương tiện)</td>
+            </tr>
+            <tr>
+                <td>onvolumechange</td>
+                <td>script</td>
+                <td>Kịch bản được chạy mỗi khi âm lượng thay đổi (bao gồm việc đặt âm lượng thành "tắt tiếng")</td>
+            </tr>
+            <tr>
+                <td>onwaiting</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi phương tiện tạm dừng nhưng được mong đợi sẽ tiếp tục (như khi phương tiện tạm
+                    dừng để đệm thêm dữ liệu)</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện Misc</caption>
+            <tr>
+                <th>Thuộc tính</th>
+                <th>Giá trị</th>
+                <th>Miêu tả</th>
+            </tr>
+            <tr>
+                <td>ontoggle</td>
+                <td>script</td>
+                <td>Kịch bản được chạy khi người dùng mở hoặc đóng phần tử &lt;details&gt;</td>
+            </tr>
+        </table>
+        <br>
+        <h2>22.16 HTML Audio/Video Dom tham khảo</h2>
+        <br>
+        <table>
+            <caption>Phương thức Audio/Video HTML</caption>
+            <thead>
+                <tr>
+                    <th>Phương thức</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>addTextTrack()</td>
+                    <td>Thêm một track văn bản mới vào audio/video</td>
+                </tr>
+                <tr>
+                    <td>canPlayType()</td>
+                    <td>Kiểm tra xem trình duyệt có thể phát loại audio/video được chỉ định hay không</td>
+                </tr>
+                <tr>
+                    <td>load()</td>
+                    <td>Tải lại phần tử audio/video</td>
+                </tr>
+                <tr>
+                    <td>play()</td>
+                    <td>Bắt đầu phát audio/video</td>
+                </tr>
+                <tr>
+                    <td>pause()</td>
+                    <td>Tạm dừng audio/video đang phát</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <caption>Thuộc tính Audio/Video HTML</caption>
+            <thead>
+                <tr>
+                    <th>Thuộc tính</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>audioTracks</td>
+                    <td>Trả về đối tượng AudioTrackList đại diện cho các track âm thanh có sẵn</td>
+                </tr>
+                <tr>
+                    <td>autoplay</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có tự động phát khi tải hay không</td>
+                </tr>
+                <tr>
+                    <td>buffered</td>
+                    <td>Trả về đối tượng TimeRanges đại diện cho các phần đã lưu vào bộ nhớ đệm của audio/video</td>
+                </tr>
+                <tr>
+                    <td>controller</td>
+                    <td>Trả về đối tượng MediaController đại diện cho bộ điều khiển media hiện tại của audio/video</td>
+                </tr>
+                <tr>
+                    <td>controls</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có hiển thị các điều khiển (như play/pause) hay không
+                    </td>
+                </tr>
+                <tr>
+                    <td>crossOrigin</td>
+                    <td>Thiết lập hoặc trả về các thiết lập CORS của audio/video</td>
+                </tr>
+                <tr>
+                    <td>currentSrc</td>
+                    <td>Trả về URL của audio/video hiện tại</td>
+                </tr>
+                <tr>
+                    <td>currentTime</td>
+                    <td>Thiết lập hoặc trả về vị trí phát hiện tại trong audio/video (tính bằng giây)</td>
+                </tr>
+                <tr>
+                    <td>defaultMuted</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có bị tắt tiếng theo mặc định hay không</td>
+                </tr>
+                <tr>
+                    <td>defaultPlaybackRate</td>
+                    <td>Thiết lập hoặc trả về tốc độ phát mặc định của audio/video</td>
+                </tr>
+                <tr>
+                    <td>duration</td>
+                    <td>Trả về độ dài của audio/video hiện tại (tính bằng giây)</td>
+                </tr>
+                <tr>
+                    <td>ended</td>
+                    <td>Trả về việc phát lại của audio/video đã kết thúc hay chưa</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>Trả về đối tượng MediaError đại diện cho trạng thái lỗi của audio/video</td>
+                </tr>
+                <tr>
+                    <td>loop</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có lặp lại khi kết thúc hay không</td>
+                </tr>
+                <tr>
+                    <td>mediaGroup</td>
+                    <td>Thiết lập hoặc trả về nhóm mà audio/video thuộc về (dùng để liên kết nhiều phần tử audio/video)
+                    </td>
+                </tr>
+                <tr>
+                    <td>muted</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có bị tắt tiếng hay không</td>
+                </tr>
+                <tr>
+                    <td>networkState</td>
+                    <td>Trả về trạng thái mạng hiện tại của audio/video</td>
+                </tr>
+                <tr>
+                    <td>paused</td>
+                    <td>Trả về việc audio/video đang bị tạm dừng hay không</td>
+                </tr>
+                <tr>
+                    <td>playbackRate</td>
+                    <td>Thiết lập hoặc trả về tốc độ phát của audio/video</td>
+                </tr>
+                <tr>
+                    <td>played</td>
+                    <td>Trả về đối tượng TimeRanges đại diện cho các phần đã được phát của audio/video</td>
+                </tr>
+                <tr>
+                    <td>preload</td>
+                    <td>Thiết lập hoặc trả về việc audio/video có được tải khi trang tải hay không</td>
+                </tr>
+                <tr>
+                    <td>readyState</td>
+                    <td>Trả về trạng thái sẵn sàng hiện tại của audio/video</td>
+                </tr>
+                <tr>
+                    <td>seekable</td>
+                    <td>Trả về đối tượng TimeRanges đại diện cho các phần có thể tìm kiếm được của audio/video</td>
+                </tr>
+                <tr>
+                    <td>seeking</td>
+                    <td>Trả về việc người dùng hiện đang tìm kiếm trong audio/video hay không</td>
+                </tr>
+                <tr>
+                    <td>src</td>
+                    <td>Thiết lập hoặc trả về nguồn hiện tại của phần tử audio/video</td>
+                </tr>
+                <tr>
+                    <td>startDate</td>
+                    <td>Trả về đối tượng Date đại diện cho độ lệch thời gian hiện tại</td>
+                </tr>
+                <tr>
+                    <td>textTracks</td>
+                    <td>Trả về đối tượng TextTrackList đại diện cho các track văn bản có sẵn</td>
+                </tr>
+                <tr>
+                    <td>videoTracks</td>
+                    <td>Đã bị loại bỏ. Không nên sử dụng.</td>
+                </tr>
+                <tr>
+                    <td>volume</td>
+                    <td>Thiết lập hoặc trả về âm lượng của audio/video</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <caption>Sự kiện Audio/Video HTML</caption>
+            <thead>
+                <tr>
+                    <th>Sự kiện</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>abort</td>
+                    <td>Xảy ra khi việc tải một audio/video bị hủy</td>
+                </tr>
+                <tr>
+                    <td>canplay</td>
+                    <td>Xảy ra khi trình duyệt có thể bắt đầu phát audio/video</td>
+                </tr>
+                <tr>
+                    <td>canplaythrough</td>
+                    <td>Xảy ra khi trình duyệt có thể phát xuyên suốt audio/video mà không cần dừng lại để tải bộ nhớ
+                        đệm
+                    </td>
+                </tr>
+                <tr>
+                    <td>durationchange</td>
+                    <td>Xảy ra khi thời lượng của audio/video bị thay đổi</td>
+                </tr>
+                <tr>
+                    <td>emptied</td>
+                    <td>Xảy ra khi danh sách phát hiện tại bị rỗng</td>
+                </tr>
+                <tr>
+                    <td>ended</td>
+                    <td>Xảy ra khi danh sách phát hiện tại kết thúc</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>Xảy ra khi có lỗi trong quá trình tải một audio/video</td>
+                </tr>
+                <tr>
+                    <td>loadeddata</td>
+                    <td>Xảy ra khi trình duyệt đã tải khung hình hiện tại của audio/video</td>
+                </tr>
+                <tr>
+                    <td>loadedmetadata</td>
+                    <td>Xảy ra khi trình duyệt đã tải dữ liệu meta cho audio/video</td>
+                </tr>
+                <tr>
+                    <td>loadstart</td>
+                    <td>Xảy ra khi trình duyệt bắt đầu tìm kiếm audio/video</td>
+                </tr>
+                <tr>
+                    <td>pause</td>
+                    <td>Xảy ra khi audio/video đã bị tạm dừng</td>
+                </tr>
+                <tr>
+                    <td>play</td>
+                    <td>Xảy ra khi audio/video được bắt đầu hoặc không còn bị tạm dừng</td>
+                </tr>
+                <tr>
+                    <td>playing</td>
+                    <td>Xảy ra khi audio/video đang phát sau khi đã bị tạm dừng hoặc dừng lại để tải bộ nhớ đệm</td>
+                </tr>
+                <tr>
+                    <td>progress</td>
+                    <td>Xảy ra khi trình duyệt đang tải audio/video</td>
+                </tr>
+                <tr>
+                    <td>ratechange</td>
+                    <td>Xảy ra khi tốc độ phát của audio/video bị thay đổi</td>
+                </tr>
+                <tr>
+                    <td>seeked</td>
+                    <td>Xảy ra khi người dùng đã hoàn thành việc di chuyển/nhảy đến vị trí mới trong audio/video</td>
+                </tr>
+                <tr>
+                    <td>seeking</td>
+                    <td>Xảy ra khi người dùng bắt đầu di chuyển/nhảy đến vị trí mới trong audio/video</td>
+                </tr>
+                <tr>
+                    <td>stalled</td>
+                    <td>Xảy ra khi trình duyệt đang cố gắng lấy dữ liệu phương tiện, nhưng dữ liệu không có sẵn</td>
+                </tr>
+                <tr>
+                    <td>suspend</td>
+                    <td>Xảy ra khi trình duyệt cố tình không lấy dữ liệu phương tiện</td>
+                </tr>
+                <tr>
+                    <td>timeupdate</td>
+                    <td>Xảy ra khi vị trí phát hiện tại đã thay đổi</td>
+                </tr>
+                <tr>
+                    <td>volumechange</td>
+                    <td>Xảy ra khi âm lượng bị thay đổi</td>
+                </tr>
+                <tr>
+                    <td>waiting</td>
+                    <td>Xảy ra khi video dừng lại vì cần tải bộ nhớ đệm khung hình tiếp theo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>22.17 Danh sách mã màu hỗ trợ bởi các trình duyệt</h2>
+        <p>Bấm vào tên màu hoặc mã hex để xem màu đó như thế nào trên nền màu khác nhau:</p>
+        <div id="color-list" class="color-container"></div>
+    </main>
+    <footer>
+        <br>
+        <br>
+        <p>Bản quyền thuộc về Đoàn Minh Khang - 2024</p>
+    </footer>
+    <script>
+        const colors = [{
+                name: "AliceBlue",
+                hex: "#F0F8FF"
+            },
+            {
+                name: "AntiqueWhite",
+                hex: "#FAEBD7"
+            },
+            {
+                name: "Aqua",
+                hex: "#00FFFF"
+            },
+            {
+                name: "Aquamarine",
+                hex: "#7FFFD4"
+            },
+            {
+                name: "Azure",
+                hex: "#F0FFFF"
+            },
+            {
+                name: "Beige",
+                hex: "#F5F5DC"
+            },
+            {
+                name: "Bisque",
+                hex: "#FFE4C4"
+            },
+            {
+                name: "Black",
+                hex: "#000000"
+            },
+            {
+                name: "BlanchedAlmond",
+                hex: "#FFEBCD"
+            },
+            {
+                name: "Blue",
+                hex: "#0000FF"
+            },
+            {
+                name: "BlueViolet",
+                hex: "#8A2BE2"
+            },
+            {
+                name: "Brown",
+                hex: "#A52A2A"
+            },
+            {
+                name: "BurlyWood",
+                hex: "#DEB887"
+            },
+            {
+                name: "CadetBlue",
+                hex: "#5F9EA0"
+            },
+            {
+                name: "Chartreuse",
+                hex: "#7FFF00"
+            },
+            {
+                name: "Chocolate",
+                hex: "#D2691E"
+            },
+            {
+                name: "Coral",
+                hex: "#FF7F50"
+            },
+            {
+                name: "CornflowerBlue",
+                hex: "#6495ED"
+            },
+            {
+                name: "Cornsilk",
+                hex: "#FFF8DC"
+            },
+            {
+                name: "Crimson",
+                hex: "#DC143C"
+            },
+            {
+                name: "Cyan",
+                hex: "#00FFFF"
+            },
+            {
+                name: "DarkBlue",
+                hex: "#00008B"
+            },
+            {
+                name: "DarkCyan",
+                hex: "#008B8B"
+            },
+            {
+                name: "DarkGoldenRod",
+                hex: "#B8860B"
+            },
+            {
+                name: "DarkGray",
+                hex: "#A9A9A9"
+            },
+            {
+                name: "DarkGrey",
+                hex: "#A9A9A9"
+            },
+            {
+                name: "DarkGreen",
+                hex: "#006400"
+            },
+            {
+                name: "DarkKhaki",
+                hex: "#BDB76B"
+            },
+            {
+                name: "DarkMagenta",
+                hex: "#8B008B"
+            },
+            {
+                name: "DarkOliveGreen",
+                hex: "#556B2F"
+            },
+            {
+                name: "DarkOrange",
+                hex: "#FF8C00"
+            },
+            {
+                name: "DarkOrchid",
+                hex: "#9932CC"
+            },
+            {
+                name: "DarkRed",
+                hex: "#8B0000"
+            },
+            {
+                name: "DarkSalmon",
+                hex: "#E9967A"
+            },
+            {
+                name: "DarkSeaGreen",
+                hex: "#8FBC8F"
+            },
+            {
+                name: "DarkSlateBlue",
+                hex: "#483D8B"
+            },
+            {
+                name: "DarkSlateGray",
+                hex: "#2F4F4F"
+            },
+            {
+                name: "DarkSlateGrey",
+                hex: "#2F4F4F"
+            },
+            {
+                name: "DarkTurquoise",
+                hex: "#00CED1"
+            },
+            {
+                name: "DarkViolet",
+                hex: "#9400D3"
+            },
+            {
+                name: "DeepPink",
+                hex: "#FF1493"
+            },
+            {
+                name: "DeepSkyBlue",
+                hex: "#00BFFF"
+            },
+            {
+                name: "DimGray",
+                hex: "#696969"
+            },
+            {
+                name: "DimGrey",
+                hex: "#696969"
+            },
+            {
+                name: "DodgerBlue",
+                hex: "#1E90FF"
+            },
+            {
+                name: "FireBrick",
+                hex: "#B22222"
+            },
+            {
+                name: "FloralWhite",
+                hex: "#FFFAF0"
+            },
+            {
+                name: "ForestGreen",
+                hex: "#228B22"
+            },
+            {
+                name: "Fuchsia",
+                hex: "#FF00FF"
+            },
+            {
+                name: "Gainsboro",
+                hex: "#DCDCDC"
+            },
+            {
+                name: "GhostWhite",
+                hex: "#F8F8FF"
+            },
+            {
+                name: "Gold",
+                hex: "#FFD700"
+            },
+            {
+                name: "GoldenRod",
+                hex: "#DAA520"
+            },
+            {
+                name: "Gray",
+                hex: "#808080"
+            },
+            {
+                name: "Grey",
+                hex: "#808080"
+            },
+            {
+                name: "Green",
+                hex: "#008000"
+            },
+            {
+                name: "GreenYellow",
+                hex: "#ADFF2F"
+            },
+            {
+                name: "HoneyDew",
+                hex: "#F0FFF0"
+            },
+            {
+                name: "HotPink",
+                hex: "#FF69B4"
+            },
+            {
+                name: "IndianRed",
+                hex: "#CD5C5C"
+            },
+            {
+                name: "Indigo",
+                hex: "#4B0082"
+            },
+            {
+                name: "Ivory",
+                hex: "#FFFFF0"
+            },
+            {
+                name: "Khaki",
+                hex: "#F0E68C"
+            },
+            {
+                name: "Lavender",
+                hex: "#E6E6FA"
+            },
+            {
+                name: "LavenderBlush",
+                hex: "#FFF0F5"
+            },
+            {
+                name: "LawnGreen",
+                hex: "#7CFC00"
+            },
+            {
+                name: "LemonChiffon",
+                hex: "#FFFACD"
+            },
+            {
+                name: "LightBlue",
+                hex: "#ADD8E6"
+            },
+            {
+                name: "LightCoral",
+                hex: "#F08080"
+            },
+            {
+                name: "LightCyan",
+                hex: "#E0FFFF"
+            },
+            {
+                name: "LightGoldenRodYellow",
+                hex: "#FAFAD2"
+            },
+            {
+                name: "LightGray",
+                hex: "#D3D3D3"
+            },
+            {
+                name: "LightGrey",
+                hex: "#D3D3D3"
+            },
+            {
+                name: "LightGreen",
+                hex: "#90EE90"
+            },
+            {
+                name: "LightPink",
+                hex: "#FFB6C1"
+            },
+            {
+                name: "LightSalmon",
+                hex: "#FFA07A"
+            },
+            {
+                name: "LightSeaGreen",
+                hex: "#20B2AA"
+            },
+            {
+                name: "LightSkyBlue",
+                hex: "#87CEFA"
+            },
+            {
+                name: "LightSlateGray",
+                hex: "#778899"
+            },
+            {
+                name: "LightSlateGrey",
+                hex: "#778899"
+            },
+            {
+                name: "LightSteelBlue",
+                hex: "#B0C4DE"
+            },
+            {
+                name: "LightYellow",
+                hex: "#FFFFE0"
+            },
+            {
+                name: "Lime",
+                hex: "#00FF00"
+            },
+            {
+                name: "LimeGreen",
+                hex: "#32CD32"
+            },
+            {
+                name: "Linen",
+                hex: "#FAF0E6"
+            },
+            {
+                name: "Magenta",
+                hex: "#FF00FF"
+            },
+            {
+                name: "Maroon",
+                hex: "#800000"
+            },
+            {
+                name: "MediumAquaMarine",
+                hex: "#66CDAA"
+            },
+            {
+                name: "MediumBlue",
+                hex: "#0000CD"
+            },
+            {
+                name: "MediumOrchid",
+                hex: "#BA55D3"
+            },
+            {
+                name: "MediumPurple",
+                hex: "#9370DB"
+            },
+            {
+                name: "MediumSeaGreen",
+                hex: "#3CB371"
+            },
+            {
+                name: "MediumSlateBlue",
+                hex: "#7B68EE"
+            },
+            {
+                name: "MediumSpringGreen",
+                hex: "#00FA9A"
+            },
+            {
+                name: "MediumTurquoise",
+                hex: "#48D1CC"
+            },
+            {
+                name: "MediumVioletRed",
+                hex: "#C71585"
+            },
+            {
+                name: "MidnightBlue",
+                hex: "#191970"
+            },
+            {
+                name: "MintCream",
+                hex: "#F5FFFA"
+            },
+            {
+                name: "MistyRose",
+                hex: "#FFE4E1"
+            },
+            {
+                name: "Moccasin",
+                hex: "#FFE4B5"
+            },
+            {
+                name: "NavajoWhite",
+                hex: "#FFDEAD"
+            },
+            {
+                name: "Navy",
+                hex: "#000080"
+            },
+            {
+                name: "OldLace",
+                hex: "#FDF5E6"
+            },
+            {
+                name: "Olive",
+                hex: "#808000"
+            },
+            {
+                name: "OliveDrab",
+                hex: "#6B8E23"
+            },
+            {
+                name: "Orange",
+                hex: "#FFA500"
+            },
+            {
+                name: "OrangeRed",
+                hex: "#FF4500"
+            },
+            {
+                name: "Orchid",
+                hex: "#DA70D6"
+            },
+            {
+                name: "PaleGoldenRod",
+                hex: "#EEE8AA"
+            },
+            {
+                name: "PaleGreen",
+                hex: "#98FB98"
+            },
+            {
+                name: "PaleTurquoise",
+                hex: "#AFEEEE"
+            },
+            {
+                name: "PaleVioletRed",
+                hex: "#DB7093"
+            },
+            {
+                name: "PapayaWhip",
+                hex: "#FFEFD5"
+            },
+            {
+                name: "PeachPuff",
+                hex: "#FFDAB9"
+            },
+            {
+                name: "Peru",
+                hex: "#CD853F"
+            },
+            {
+                name: "Pink",
+                hex: "#FFC0CB"
+            },
+            {
+                name: "Plum",
+                hex: "#DDA0DD"
+            },
+            {
+                name: "PowderBlue",
+                hex: "#B0E0E6"
+            },
+            {
+                name: "Purple",
+                hex: "#800080"
+            },
+            {
+                name: "RebeccaPurple",
+                hex: "#663399"
+            },
+            {
+                name: "Red",
+                hex: "#FF0000"
+            },
+            {
+                name: "RosyBrown",
+                hex: "#BC8F8F"
+            },
+            {
+                name: "RoyalBlue",
+                hex: "#4169E1"
+            },
+            {
+                name: "SaddleBrown",
+                hex: "#8B4513"
+            },
+            {
+                name: "Salmon",
+                hex: "#FA8072"
+            },
+            {
+                name: "SandyBrown",
+                hex: "#F4A460"
+            },
+            {
+                name: "SeaGreen",
+                hex: "#2E8B57"
+            },
+            {
+                name: "SeaShell",
+                hex: "#FFF5EE"
+            },
+            {
+                name: "Sienna",
+                hex: "#A0522D"
+            },
+            {
+                name: "Silver",
+                hex: "#C0C0C0"
+            },
+            {
+                name: "SkyBlue",
+                hex: "#87CEEB"
+            },
+            {
+                name: "SlateBlue",
+                hex: "#6A5ACD"
+            },
+            {
+                name: "SlateGray",
+                hex: "#708090"
+            },
+            {
+                name: "SlateGrey",
+                hex: "#708090"
+            },
+            {
+                name: "Snow",
+                hex: "#FFFAFA"
+            },
+            {
+                name: "SpringGreen",
+                hex: "#00FF7F"
+            },
+            {
+                name: "SteelBlue",
+                hex: "#4682B4"
+            },
+            {
+                name: "Tan",
+                hex: "#D2B48C"
+            },
+            {
+                name: "Teal",
+                hex: "#008080"
+            },
+            {
+                name: "Thistle",
+                hex: "#D8BFD8"
+            },
+            {
+                name: "Tomato",
+                hex: "#FF6347"
+            },
+            {
+                name: "Turquoise",
+                hex: "#40E0D0"
+            },
+            {
+                name: "Violet",
+                hex: "#EE82EE"
+            },
+            {
+                name: "Wheat",
+                hex: "#F5DEB3"
+            },
+            {
+                name: "White",
+                hex: "#FFFFFF"
+            },
+            {
+                name: "WhiteSmoke",
+                hex: "#F5F5F5"
+            },
+            {
+                name: "Yellow",
+                hex: "#FFFF00"
+            },
+            {
+                name: "YellowGreen",
+                hex: "#9ACD32"
+            }
+        ];
+
+        const colorList = document.getElementById("color-list");
+
+        colors.forEach(color => {
+            const colorBlock = document.createElement("div");
+            colorBlock.className = "color-block";
+
+            const colorSample = document.createElement("div");
+            colorSample.className = "color-sample";
+            colorSample.style.backgroundColor = color.hex;
+
+            const colorName = document.createElement("div");
+            colorName.className = "color-name";
+            colorName.textContent = color.name;
+
+            const colorHex = document.createElement("div");
+            colorHex.className = "color-hex";
+            colorHex.textContent = color.hex;
+
+            colorBlock.appendChild(colorSample);
+            colorBlock.appendChild(colorName);
+            colorBlock.appendChild(colorHex);
+
+            colorList.appendChild(colorBlock);
+
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchButton = document.getElementById('search-button');
+            const searchInput = document.getElementById('search-input');
+            const menuButton = document.getElementById('menu-button');
+            const menuList = document.getElementById('menu-list');
+
+            // Tìm kiếm từ khóa
+            searchButton.addEventListener('click', () => {
+                const keyword = searchInput.value.toLowerCase();
+                const elements = document.querySelectorAll('h2, h3, p, li');
+
+                elements.forEach(element => {
+                    if (element.innerText.toLowerCase().includes(keyword)) {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        element.style.backgroundColor = 'yellow';
+                        setTimeout(() => {
+                            element.style.backgroundColor = 'inherit';
+                        }, 2000);
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchButton = document.getElementById('search-button');
+            const searchInput = document.getElementById('search-input');
+            const menuButton = document.getElementById('menu-button');
+            const menuList = document.getElementById('menu-list');
+            const menuContainer = document.getElementById('menu-container');
+
+            // Tạo danh sách thẻ h2 cho menu
+            const headings = document.querySelectorAll('h2');
+            headings.forEach((heading, index) => {
+                const listItem = document.createElement('li');
+                const anchor = document.createElement('a');
+                anchor.href = `#heading-${index}`;
+                anchor.innerText = heading.innerText;
+                heading.id = `heading-${index}`;
+                listItem.appendChild(anchor);
+                menuList.appendChild(listItem);
+            });
+
+            // Hiển thị/Ẩn menu khi nhấn nút menu
+            menuButton.addEventListener('click', () => {
+                menuList.classList.toggle('grid');
+                menuList.style.display = menuList.style.display === 'none' ? 'grid' :
+                    'none'; /* Hiển thị hoặc ẩn danh sách */
+            });
+
+            // Đóng menu khi nhấn ra ngoài
+            document.addEventListener('click', (event) => {
+                if (!menuContainer.contains(event.target)) {
+                    menuList.classList.remove('grid');
+                    menuList.style.display = 'none'; /* Ẩn danh sách khi click ra ngoài */
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
